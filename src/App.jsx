@@ -1,8 +1,11 @@
+import Busqueda from "./Busqueda";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hola mundo!</h1>
+      <h1 className="text-primary">Calificaciones Tributarias</h1>
+      <hr/>
+      <Busqueda />
     </div>
   );
 }
