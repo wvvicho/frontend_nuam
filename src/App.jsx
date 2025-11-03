@@ -1,4 +1,4 @@
-import Busqueda from "./Busqueda";
+import Busqueda from "./Búsqueda calificaciones/Busqueda";
 
 function App() {
   return (
