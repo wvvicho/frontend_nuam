@@ -1,82 +1,9 @@
 import { useState } from "react";
+import FiltroMercado from "./FiltroMercado";
+import FiltroOrigen from "./FiltroOrigen";
+import FiltroPeriodo from "./FiltroPeriodo";
+import FiltroPendiente from "./FiltroPendiente";
 
-function Mercado({valorActual, manejarCambio}) {
-    const ListaMercadoEj = ["Mercado1", "Mercado2", "Mercado3"];
-
-
-
-    return (
-        <div id="Mercado" className="d-flex align-items-center col col-lg-3 col-sm-12 col-xs-12">
-            <label htmlFor="lista-mercado" className="form-label">Mercado</label>
-            <select name="mercado" 
-                    id="lista-mercado" 
-                    className="form-select ms-2"
-                    value={valorActual}
-                    onChange={manejarCambio}
-                    >
-               {ListaMercadoEj.map((item, index) => (
-                  <option key={index}>{item}</option>
-                ))}
-            </select>
-        </div>
-    );
-};
-
-
-function Origen({valorActual, manejarCambio}) {
-    const ListaOrigenEj = ["Origen1", "Origen2", "Origen3", "Origen4", "Origen5"]
-
-    return (
-        <div id="Origen" className="d-flex align-items-center ms-2 col col-lg-3 col-sm-12 col-xs-12">
-            <label htmlFor="lista-origen" className="form-label">Origen</label>
-            <select name="origen" 
-                    id="lista-origen" 
-                    className="form-select ms-2"
-                    value={valorActual}
-                    onChange={manejarCambio}
-                    >
-               {ListaOrigenEj.map((item, index) => (
-                  <option key={index}>{item}</option>
-                ))}
-            </select>
-        </div>
-    );
-};
-
-function PeriodoComercial({valorActual, manejarCambio}) {
-    const ListaPeriodoComercialEj = ["PeriodoComercial1", "PeriodoComercial2", "PeriodoComercial3", "PeriodoComercial4", "PeriodoComercial5"]
-
-    return (
-        <div id="PeriodoComercial" className="d-flex align-items-center col col-lg-5 col-sm-12 col-xs-12 ms-2 text-nowrap">
-            <label htmlFor="lista-periodo" className="form-label">Periodo Comercial</label>
-            <select name="periodo" 
-                    id="lista-periodo" 
-                    className="form-select ms-2"
-                    value={valorActual}
-                    onChange={manejarCambio}
-                    >
-               {ListaPeriodoComercialEj.map((item, index) => (
-                  <option key={index}>{item}</option>
-                ))}
-            </select>
-        </div>
-    );
-
-};
-
-function Pendiente({valorActual, manejarCambio}) {
-    return (
-        <div id="Pendiente">
-            <label htmlFor="pendiente">Calificación Pendiente</label>
-            <input type="checkbox" 
-                    name="pendiente" 
-                    id="pendiente" 
-                    checked={valorActual}
-                    onChange={manejarCambio}
-                    className="ms-2"/>
-        </div>
-    )
-}
 
 
 //type="button" evita que se envíe el formulario o bien que se recargue la página
@@ -125,10 +52,10 @@ function Busqueda() {
         <div className="container-fluid">
             <form className="row align-items-end">
                 <div className="col col-lg-10 col-sm-12 col-xs-12 row align-items-end">
-                    <Mercado valorActual={filtros.mercado} manejarCambio={manejarCambio}/>
-                    <Origen valorActual={filtros.origen} manejarCambio={manejarCambio}/>
-                    <PeriodoComercial valorActual={filtros.periodoComercial} manejarCambio={manejarCambio}/>
-                    <Pendiente valorActual={filtros.pendiente} manejarCambio={manejarCambio}/>
+                    <FiltroMercado valorActual={filtros.mercado} manejarCambio={manejarCambio}/>
+                    <FiltroOrigen valorActual={filtros.origen} manejarCambio={manejarCambio}/>
+                    <FiltroPeriodo valorActual={filtros.periodoComercial} manejarCambio={manejarCambio}/>
+                    <FiltroPendiente valorActual={filtros.pendiente} manejarCambio={manejarCambio}/>
                 </div>
                 <div className="col col-lg-2 col-sm-12 col-xs-12">
                     <Botones onBuscar={manejarBuscar} onLimpiar={manejarLimpiar}/>
