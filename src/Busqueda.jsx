@@ -6,7 +6,7 @@ function Mercado({valorActual, manejarCambio}) {
 
 
     return (
-        <div id="Mercado" className="d-flex align-items-center col-3">
+        <div id="Mercado" className="d-flex align-items-center col col-lg-3 col-sm-12 col-xs-12">
             <label htmlFor="lista-mercado" className="form-label">Mercado</label>
             <select name="mercado" 
                     id="lista-mercado" 
@@ -27,7 +27,7 @@ function Origen({valorActual, manejarCambio}) {
     const ListaOrigenEj = ["Origen1", "Origen2", "Origen3", "Origen4", "Origen5"]
 
     return (
-        <div id="Origen" className="d-flex align-items-center col-3 ms-4">
+        <div id="Origen" className="d-flex align-items-center ms-2 col col-lg-3 col-sm-12 col-xs-12">
             <label htmlFor="lista-origen" className="form-label">Origen</label>
             <select name="origen" 
                     id="lista-origen" 
@@ -47,7 +47,7 @@ function PeriodoComercial({valorActual, manejarCambio}) {
     const ListaPeriodoComercialEj = ["PeriodoComercial1", "PeriodoComercial2", "PeriodoComercial3", "PeriodoComercial4", "PeriodoComercial5"]
 
     return (
-        <div id="PeriodoComercial" className="d-flex align-items-center col-5 ms-4 text-nowrap">
+        <div id="PeriodoComercial" className="d-flex align-items-center col col-lg-5 col-sm-12 col-xs-12 ms-2 text-nowrap">
             <label htmlFor="lista-periodo" className="form-label">Periodo Comercial</label>
             <select name="periodo" 
                     id="lista-periodo" 
@@ -124,13 +124,13 @@ function Busqueda() {
     return(
         <div className="container-fluid">
             <form className="row align-items-end">
-                <div className="col-10 row align-items-end">
+                <div className="col col-lg-10 col-sm-12 col-xs-12 row align-items-end">
                     <Mercado valorActual={filtros.mercado} manejarCambio={manejarCambio}/>
                     <Origen valorActual={filtros.origen} manejarCambio={manejarCambio}/>
                     <PeriodoComercial valorActual={filtros.periodoComercial} manejarCambio={manejarCambio}/>
                     <Pendiente valorActual={filtros.pendiente} manejarCambio={manejarCambio}/>
                 </div>
-                <div className="col-2">
+                <div className="col col-lg-2 col-sm-12 col-xs-12">
                     <Botones onBuscar={manejarBuscar} onLimpiar={manejarLimpiar}/>
                 </div>
             </form>
