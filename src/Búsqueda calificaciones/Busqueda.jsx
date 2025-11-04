@@ -16,7 +16,7 @@ function Botones({onBuscar, onLimpiar}) {
     );
 };
 
-function Busqueda() {
+function Busqueda(Cambiando) {
 
     const [filtros, setFiltros] = useState({
         mercado: 'Mercado1',
@@ -33,6 +33,8 @@ function Busqueda() {
             ...prevFiltros,
             [name]: nuevoValor,
         }));
+
+        Cambiando(filtros);
     };
 
     const manejarBuscar = () => {
