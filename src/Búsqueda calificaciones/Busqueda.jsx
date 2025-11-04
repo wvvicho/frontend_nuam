@@ -16,12 +16,12 @@ function Botones({onBuscar, onLimpiar}) {
     );
 };
 
-function Busqueda(Cambiando) {
+function Busqueda({Cambiando}) {
 
     const [filtros, setFiltros] = useState({
-        mercado: 'Mercado1',
-        origen: 'Origen1',
-        periodo: 'PeriodoComercial1',
+        mercado: '',
+        origen: '',
+        periodo: '',
         pendiente: false
     });
 
@@ -43,9 +43,9 @@ function Busqueda(Cambiando) {
 
     const manejarLimpiar = () => {
         setFiltros({
-            mercado: 'Mercado1',
-            origen: 'Origen1',
-            periodo: 'PeriodoComercial1',
+            mercado: '',
+            origen: '',
+            periodo: '',
             pendiente: false,
         });
     };
