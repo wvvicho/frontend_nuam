@@ -34,11 +34,11 @@ function Busqueda({Cambiando}) {
             [name]: nuevoValor,
         }));
 
-        Cambiando(filtros);
     };
 
     const manejarBuscar = () => {
         console.log("Filtros aplicados: ", filtros);
+        Cambiando(filtros);
     };
 
     const manejarLimpiar = () => {
