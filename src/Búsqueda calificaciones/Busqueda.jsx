@@ -42,21 +42,24 @@ function Busqueda({Cambiando}) {
     };
 
     const manejarLimpiar = () => {
-        setFiltros({
+        const filtrosLimpios = {
             mercado: '',
             origen: '',
             periodo: '',
             pendiente: false,
-        });
+        }
+        setFiltros(filtrosLimpios);
+        Cambiando(filtrosLimpios);
     };
 
+    
     return(
         <div className="container-fluid">
             <form className="row align-items-end">
                 <div className="col col-lg-10 col-sm-12 col-xs-12 row align-items-end">
                     <FiltroMercado valorActual={filtros.mercado} manejarCambio={manejarCambio}/>
                     <FiltroOrigen valorActual={filtros.origen} manejarCambio={manejarCambio}/>
-                    <FiltroPeriodo valorActual={filtros.periodoComercial} manejarCambio={manejarCambio}/>
+                    <FiltroPeriodo valorActual={filtros.periodo} manejarCambio={manejarCambio}/>
                     <FiltroPendiente valorActual={filtros.pendiente} manejarCambio={manejarCambio}/>
                 </div>
                 <div className="col col-lg-2 col-sm-12 col-xs-12">
