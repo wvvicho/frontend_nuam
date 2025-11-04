@@ -1,5 +1,5 @@
 function FiltroOrigen({valorActual, manejarCambio}) {
-    const ListaOrigenEj = ["Origen1", "Origen2", "Origen3", "Origen4", "Origen5"]
+    const ListaOrigenEj = ["","Origen1", "Origen2", "Origen3", "Origen4", "Origen5"]
 
     return (
         <div id="Origen" className="d-flex align-items-center ms-2 col col-lg-3 col-sm-12 col-xs-12">

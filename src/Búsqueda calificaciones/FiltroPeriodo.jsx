@@ -1,5 +1,5 @@
 function FiltroPeriodo({valorActual, manejarCambio}) {
-    const ListaPeriodoComercialEj = ["PeriodoComercial1", "PeriodoComercial2", "PeriodoComercial3", "PeriodoComercial4", "PeriodoComercial5"]
+    const ListaPeriodoComercialEj = ["","PeriodoComercial1", "PeriodoComercial2", "PeriodoComercial3", "PeriodoComercial4", "PeriodoComercial5"]
 
     return (
         <div id="PeriodoComercial" className="d-flex align-items-center col col-lg-5 col-sm-12 col-xs-12 ms-2 text-nowrap">

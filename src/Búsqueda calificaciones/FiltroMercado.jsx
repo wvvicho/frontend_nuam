@@ -1,5 +1,5 @@
 function FiltroMercado({valorActual, manejarCambio}) {
-    const ListaMercadoEj = ["Mercado1", "Mercado2", "Mercado3"];
+    const ListaMercadoEj = ["","Mercado1", "Mercado2", "Mercado3"];
 
 
 
