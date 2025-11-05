@@ -1,3 +1,4 @@
+import Botones from "./Botones CRUD/Botones";
 import Busqueda from "./Búsqueda calificaciones/Busqueda";
 import Tabla from "./Tabla calificaciones/Tabla";
 import { useState } from "react";
@@ -21,6 +22,7 @@ function App() {
       <hr/>
       <Busqueda Cambiando={Cambiando}/>
       <Tabla mercadoBusqueda={filtros.mercado} origenBusqueda={filtros.origen} periodoBusqueda={filtros.periodo} pendienteBusqueda={filtros.pendiente} />
+      <Botones />
     </div>
   );
 }
