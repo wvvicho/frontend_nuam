@@ -1,5 +1,4 @@
-function FiltroOrigen({valorActual, manejarCambio}) {
-    const ListaOrigenEj = ["","Origen1", "Origen2", "Origen3", "Origen4", "Origen5"]
+function FiltroOrigen({valorActual, manejarCambio, origenes}) {
 
     return (
         <div id="Origen" className="d-flex align-items-center ms-2 col col-lg-3 col-sm-12 col-xs-12">
@@ -10,7 +9,8 @@ function FiltroOrigen({valorActual, manejarCambio}) {
                     value={valorActual}
                     onChange={manejarCambio}
                     >
-               {ListaOrigenEj.map((item, index) => (
+                        <option></option>
+               {origenes.map((item, index) => (
                   <option key={index}>{item}</option>
                 ))}
             </select>

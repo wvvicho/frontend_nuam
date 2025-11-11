@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda }) {
+function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones }) {
 
     const [ejercicio, setEjercicio] = useState('');
     const [instrumento, setInstrumento] = useState('');
@@ -9,43 +9,8 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
     const [secuencia_evento, setSecuenciaEvento] = useState('');
     const [factor_actualizacion, setFactorActualizacion] = useState('');
 
-    const CalificacionesEj = [
-        {
-            mercado:'Mercado1',
-            origen:'Origen1',
-            periodo:'PeriodoComercial1',
-            ejercicio:'2023',
-            instrumento:'A',
-            fecha_pago:'03-11-2025',
-            descripcion:'DIVIDENDO US$ 1',
-            secuencia_evento:'1110',
-            factor_actualizacion:'1'
-        },
-        {
-            mercado:'Mercado2',
-            origen:'Origen2',
-            periodo:'PeriodoComercial2',
-            ejercicio:'2024',
-            instrumento:'B',
-            fecha_pago:'02-11-2025',
-            descripcion:'DIVIDENDO US$ 2',
-            secuencia_evento:'1111',
-            factor_actualizacion:'2'
-        },
-        {
-            mercado:'Mercado3',
-            origen:'Origen3',
-            periodo:'PeriodoComercial3',
-            ejercicio:'2025',
-            instrumento:'C',
-            fecha_pago:'01-11-2025',
-            descripcion:'DIVIDENDO US$ 3',
-            secuencia_evento:'1112',
-            factor_actualizacion:'3'
-        }
-    ];
     
-    const CalificacionesEjFiltradas = CalificacionesEj.filter(calificacion => (
+    const CalificacionesFiltrada = calificaciones.filter(calificacion => (
         calificacion.mercado.toLocaleLowerCase().includes(mercadoBusqueda.toLowerCase()) &&
         calificacion.origen.toLocaleLowerCase().includes(origenBusqueda.toLowerCase()) &&
         calificacion.periodo.toLocaleLowerCase().includes(periodoBusqueda.toLowerCase()) &&
@@ -56,7 +21,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
         calificacion.secuencia_evento.toLowerCase().includes(secuencia_evento.toLowerCase()) &&
         calificacion.factor_actualizacion.toLowerCase().includes(factor_actualizacion.toLowerCase())
     ));
-    
+
     return (
         <div className="mt-3">
             <table className="table table-bordered">
@@ -121,7 +86,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                             <i class="bi bi-funnel"/>
                        </td>
                     </tr>
-                    {CalificacionesEjFiltradas.map((item, index) => (
+                    {CalificacionesFiltrada.map((item, index) => (
                         <tr key={index}>
                             <td>{item.ejercicio}</td>
                             <td>{item.instrumento}</td>

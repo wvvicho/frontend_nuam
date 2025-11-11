@@ -16,7 +16,7 @@ function Botones({onBuscar, onLimpiar}) {
     );
 };
 
-function Busqueda({Cambiando}) {
+function Busqueda({Cambiando, mercados, origenes, periodos}) {
 
     const [filtros, setFiltros] = useState({
         mercado: '',
@@ -57,9 +57,9 @@ function Busqueda({Cambiando}) {
         <div className="container-fluid">
             <form className="row align-items-end">
                 <div className="col col-lg-10 col-sm-12 col-xs-12 row align-items-end">
-                    <FiltroMercado valorActual={filtros.mercado} manejarCambio={manejarCambio}/>
-                    <FiltroOrigen valorActual={filtros.origen} manejarCambio={manejarCambio}/>
-                    <FiltroPeriodo valorActual={filtros.periodo} manejarCambio={manejarCambio}/>
+                    <FiltroMercado valorActual={filtros.mercado} manejarCambio={manejarCambio} mercados={mercados}/>
+                    <FiltroOrigen valorActual={filtros.origen} manejarCambio={manejarCambio} origenes={origenes}/>
+                    <FiltroPeriodo valorActual={filtros.periodo} manejarCambio={manejarCambio} periodos={periodos}/>
                     <FiltroPendiente valorActual={filtros.pendiente} manejarCambio={manejarCambio}/>
                 </div>
                 <div className="col col-lg-2 col-sm-12 col-xs-12">

@@ -1,6 +1,4 @@
-function FiltroMercado({valorActual, manejarCambio}) {
-    const ListaMercadoEj = ["","Mercado1", "Mercado2", "Mercado3"];
-
+function FiltroMercado({valorActual, manejarCambio, mercados}) {
 
 
     return (
@@ -12,7 +10,8 @@ function FiltroMercado({valorActual, manejarCambio}) {
                     value={valorActual}
                     onChange={manejarCambio}
                     >
-               {ListaMercadoEj.map((item, index) => (
+                        <option></option>
+               {mercados.map((item, index) => (
                   <option key={index}>{item}</option>
                 ))}
             </select>

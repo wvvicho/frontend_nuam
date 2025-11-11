@@ -1,5 +1,4 @@
-function FiltroPeriodo({valorActual, manejarCambio}) {
-    const ListaPeriodoComercialEj = ["","PeriodoComercial1", "PeriodoComercial2", "PeriodoComercial3", "PeriodoComercial4", "PeriodoComercial5"]
+function FiltroPeriodo({valorActual, manejarCambio, periodos}) {
 
     return (
         <div id="PeriodoComercial" className="d-flex align-items-center col col-lg-5 col-sm-12 col-xs-12 ms-2 text-nowrap">
@@ -10,7 +9,8 @@ function FiltroPeriodo({valorActual, manejarCambio}) {
                     value={valorActual}
                     onChange={manejarCambio}
                     >
-               {ListaPeriodoComercialEj.map((item, index) => (
+                        <option></option>
+               {periodos.map((item, index) => (
                   <option key={index}>{item}</option>
                 ))}
             </select>
