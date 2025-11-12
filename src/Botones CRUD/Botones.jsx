@@ -1,8 +1,14 @@
 import {  Modal, Box } from "@mui/material";
 import { useState } from "react";
+import FormIngreso from "../Formularios/FormularioIngreso"
 
+function Boton ({nombre}) {
+    return <div>
+        <button className="btn bg-white border border-primary text-primary">{nombre}</button>
+    </div>
+};
 
-function Botones ({ manejarBotonIngreso }) {
+function Botones ({mercados}) {
 
     const [abrir, setAbrir] = useState(false);
 
@@ -16,11 +22,11 @@ function Botones ({ manejarBotonIngreso }) {
         transform: 'translate(-50%, -50%)',
         bgcolor: 'white',
         p: 4,
-        width: '70%',
-        height:'70%',
+        width: '80%',
+        height:'90%',
         border:'2px solid lightblue',
         borderRadius:'15px',
-        textAlign: 'center',
+        textAlign: 'start',
         boxShadow: '5px 5px 10px 0px black'
     }
 
@@ -34,16 +40,18 @@ function Botones ({ manejarBotonIngreso }) {
             aria-describedby="modal-cuerpo"
             >
                 <Box sx={estiloModal}>
-                    <h1 id="modal-titulo">MODAL DE PRUEBA</h1>
-                    <p id="modal-cuerpo">Este es el texto del Modal de prueba</p>
+                    <h2 id="modal-titulo" className="text-primary">Ingresar calificación</h2>
+                    <hr />
+                    <FormIngreso mercados={mercados}/>
                     <button onClick={manejarCerrar} className="btn btn-danger">Cerrar</button>
                 </Box>
             </Modal>
-            <button className="btn bg-white border border-primary text-primary">MODIFICAR</button>
-            <button className="btn bg-white border border-primary text-primary">ELIMINAR</button>
-            <button className="btn bg-white border border-primary text-primary">COPIAR</button>
-            <button className="btn bg-white border border-primary text-primary">CARGA POR MONTO</button>
-            <button className="btn bg-white border border-primary text-primary">CARGA POR FACTOR</button>
+            <Boton nombre={"MODIFICAR"}/>
+            <Boton nombre={"ELIMINAR"}/>
+            <Boton nombre={"COPIAR"}/>
+            <Boton nombre={"CARGA POR MONTO"}/>
+            <Boton nombre={"CARGA POR FACTOR"}/>
+            
         </div>
     )
 };

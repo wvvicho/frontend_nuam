@@ -56,12 +56,12 @@ function App() {
   );
 
   return (
-    <div className="App">
+    <div className="App mt-3">
       <h1 className="text-primary">Calificaciones Tributarias</h1>
       <hr/>
       <Busqueda Cambiando={Cambiando} mercados={mercados} origenes={origenes} periodos={periodos}/>
       <Tabla mercadoBusqueda={filtros.mercado} origenBusqueda={filtros.origen} periodoBusqueda={filtros.periodo} pendienteBusqueda={filtros.pendiente} calificaciones={data}/>
-      <Botones />
+      <Botones mercados={mercados}/>
     </div>
   );
 }
