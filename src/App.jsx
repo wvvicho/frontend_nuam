@@ -61,7 +61,7 @@ function App() {
       <hr/>
       <Busqueda Cambiando={Cambiando} mercados={mercados} origenes={origenes} periodos={periodos}/>
       <Tabla mercadoBusqueda={filtros.mercado} origenBusqueda={filtros.origen} periodoBusqueda={filtros.periodo} pendienteBusqueda={filtros.pendiente} calificaciones={data}/>
-      <Botones mercados={mercados}/>
+      <Botones mercados={mercados} origenes={origenes} periodos={periodos} urlApi={URL_API}/>
     </div>
   );
 }

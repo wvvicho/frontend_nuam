@@ -11,9 +11,9 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
 
     
     const CalificacionesFiltrada = calificaciones.filter(calificacion => (
-        calificacion.mercado.toLocaleLowerCase().includes(mercadoBusqueda.toLowerCase()) &&
-        calificacion.origen.toLocaleLowerCase().includes(origenBusqueda.toLowerCase()) &&
-        calificacion.periodo.toLocaleLowerCase().includes(periodoBusqueda.toLowerCase()) &&
+        calificacion.mercado.toLowerCase().includes(mercadoBusqueda.toLowerCase()) &&
+        calificacion.origen.toLowerCase().includes(origenBusqueda.toLowerCase()) &&
+        calificacion.periodo.toLowerCase().includes(periodoBusqueda.toLowerCase()) &&
         calificacion.ejercicio.toLowerCase().includes(ejercicio.toLowerCase()) &&
         calificacion.instrumento.toLowerCase().includes(instrumento.toLowerCase()) &&
         calificacion.fecha_pago.toLowerCase().includes(fecha_pago.toLowerCase()) &&

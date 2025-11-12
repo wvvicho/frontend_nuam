@@ -131,6 +131,23 @@
       "descripcion": "DIVIDENDO EUR 0.50",
       "secuencia_evento": "2001",
       "factor_actualizacion": "1.05"
+    },
+    {
+      "id": "c2d7",
+      "mercado": "MercadoBolsa",
+      "origen": "Espana",
+      "periodo": "Q4-2024",
+      "ejercicio": "1",
+      "instrumento": "1",
+      "descripcion": "",
+      "fecha_pago": "2025-11-04",
+      "secuencia_evento": "1",
+      "factor_actualizacion": "1",
+      "dividendo": "1",
+      "valor_historico": "1",
+      "fechaActualizacion": "2025-11-12",
+      "año": "2024",
+      "isfut": false
     }
   ]
 }
