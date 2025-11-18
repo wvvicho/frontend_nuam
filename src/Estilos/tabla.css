@@ -1,0 +1,15 @@
+.table-responsive {
+    max-height: 550px;
+    overflow-y: auto;
+}
+
+.table-responsive thead{
+    position: sticky;
+    top: 0;
+}
+
+.table-responsive thead .filtros {
+    position: sticky;
+    top: 41px;
+}
+

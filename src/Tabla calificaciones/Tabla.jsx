@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../Estilos/tabla.css';
 
 function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones }) {
 
@@ -9,7 +10,8 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
     const [secuencia_evento, setSecuenciaEvento] = useState('');
     const [factor_actualizacion, setFactorActualizacion] = useState('');
 
-    
+
+
     const CalificacionesFiltrada = calificaciones.filter(calificacion => (
         calificacion.mercado.toLowerCase().includes(mercadoBusqueda.toLowerCase()) &&
         calificacion.origen.toLowerCase().includes(origenBusqueda.toLowerCase()) &&
@@ -23,8 +25,8 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
     ));
 
     return (
-        <div className="mt-3">
-            <table className="table table-bordered">
+        <div className="mt-3 table-responsive mb-4">
+            <table className="table table-bordered table-fixed-header">
                 <thead>
                     <tr className="table-row text-nowrap">
                         <th scope="col">Ejercicio</th>
@@ -34,9 +36,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                         <th scope="col">Secuencia Evento</th>
                         <th scope="col">Factor de Actualización</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr id="filtros">
+                    <tr className="filtros">
                        <td>
                             <input type="text" 
                                     id="ejercicio" 
@@ -86,6 +86,8 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                             <i class="bi bi-funnel"/>
                        </td>
                     </tr>
+                </thead>
+                <tbody>
                     {CalificacionesFiltrada.map((item, index) => (
                         <tr key={index}>
                             <td>{item.ejercicio}</td>
