@@ -1,5 +1,5 @@
 import {  Modal, Box } from "@mui/material";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FormIngreso from "../Formularios/FormularioIngreso"
 
 function Boton ({nombre, manejarAbrir}) {
@@ -13,7 +13,7 @@ function Boton ({nombre, manejarAbrir}) {
     </div>
 };
 
-function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones}) {
+function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, calificacionActualizar, manejarActualizar}) {
     const [abrir, setAbrir] = useState(false);
     const [calificacion, setCalificacion] = useState(null);
 
@@ -23,6 +23,12 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones}) 
         setCalificacion(datos);
         manejarCerrar();
     };
+
+    useEffect(() => {
+        if (calificacionActualizar != null){
+            manejarAbrir();
+        }
+    }, calificacionActualizar)
 
     useEffect(() => {
         const API = urlApi;
@@ -42,6 +48,7 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones}) 
 
                     if (calificacionCreada) {
                         console.log("Calificación ingresada con éxito");
+                        manejarActualizar();
                         cambioCalificaciones();
                     } else {
                         console.log("Error de ingreso");
@@ -86,8 +93,7 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones}) 
                 <Box sx={estiloModal}>
                     <h2 id="modal-titulo" className="text-primary">Ingresar calificación</h2>
                     <hr />
-                    <FormIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} manejarEnvio={manejarEnvio}/>
-                    
+                    <FormIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} manejarEnvio={manejarEnvio} calificacionActualizar={calificacionActualizar}/>
                 </Box>
             </Modal>
             <Boton nombre={"CARGA POR MONTO"}/>

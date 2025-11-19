@@ -1,7 +1,7 @@
 import { useState } from "react";
 import '../Estilos/tabla.css';
 
-function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlApi, cambioCalificaciones}) {
+function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlApi, cambioCalificaciones, manejarActualizar}) {
 
     const [ejercicio, setEjercicio] = useState('');
     const [instrumento, setInstrumento] = useState('');
@@ -50,6 +50,14 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
         }
     };
 
+    const actualizarCalificacion = (item) => {
+        if (!item) {
+            console.log("No se proporcionó una calificación")
+            return;
+        }
+        manejarActualizar(item);
+    };
+
     return (
         <div className="mt-3 table-responsive mb-4">
             <table className="table table-bordered table-fixed-header">
@@ -65,7 +73,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                     </tr>
                     <tr className="filtros">
                         <td>
-
+                            <h2>Filtros</h2>
                         </td>
                         <td>
                             <input type="text" 
@@ -73,7 +81,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                                     value={ejercicio}
                                     onChange={ e => setEjercicio(e.target.value)}
                                     />
-                            <i class="bi bi-funnel"/>
                         </td>
                         <td>
                             <input type="text" 
@@ -81,7 +88,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                                     value={instrumento}
                                     onChange={ e => setInstrumento(e.target.value)}
                                     />
-                            <i class="bi bi-funnel"/>
                         </td>
                         <td>
                             <input type="text" 
@@ -89,7 +95,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                                     value={fecha_pago}
                                     onChange={ e => setFechaPago(e.target.value)}
                                     />
-                            <i class="bi bi-funnel"/>
                         </td>
                         <td>
                             <input type="text" 
@@ -97,7 +102,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                                     value={descripcion}
                                     onChange={ e => setDescripcion(e.target.value)}
                                     />
-                            <i class="bi bi-funnel"/>
                         </td>
                         <td>
                             <input type="text" 
@@ -105,7 +109,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                                     value={secuencia_evento}
                                     onChange={ e => setSecuenciaEvento(e.target.value)}
                                     />
-                            <i class="bi bi-funnel"/>
                         </td>
                         <td>
                             <input type="text" 
@@ -113,7 +116,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                                     value={factor_actualizacion}
                                     onChange={ e => setFactorActualizacion(e.target.value)}
                                     />
-                            <i class="bi bi-funnel"/>
                         </td>
                     </tr>
                 </thead>
@@ -121,13 +123,13 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                     {CalificacionesFiltrada.map((item, index) => (
                         <tr key={index}>
                             <td className="d-flex gap-3">
-                                <button className="btn btn-warning w-50">Actualizar</button> 
+                                <button className="btn btn-warning w-50" onClick={() => actualizarCalificacion(item)}>Actualizar</button> 
                                 <button className="btn btn-danger w-50" onClick={() => eliminarCalificacion(item.id)}>Eliminar</button>
                             </td>
                             <td>{item.ejercicio}</td>
                             <td>{item.instrumento}</td>
                             <td>{item.fecha_pago}</td>
-                            <td>{item.descripcion}</td>
+                            <td className="text-nowrap">{item.descripcion}</td>
                             <td>{item.secuencia_evento}</td>
                             <td>{item.factor_actualizacion}</td>
                         </tr>

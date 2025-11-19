@@ -135,21 +135,21 @@
       "isfut": false
     },
     {
-      "id": "fd8c",
+      "id": "6d88",
       "mercado": "MX",
       "origen": "Banco",
-      "periodo": "2025-T1",
-      "ejercicio": "2",
-      "instrumento": "2",
-      "descripcion": "2",
-      "fecha_pago": "2025-11-22",
-      "secuencia_evento": "2",
-      "factor_actualizacion": "2",
-      "dividendo": "2",
-      "valor_historico": "2",
-      "fechaActualizacion": "2025-11-27",
-      "año": "2022",
-      "isfut": false
+      "periodo": "2023-T4",
+      "ejercicio": "3",
+      "instrumento": "3",
+      "descripcion": "3",
+      "fecha_pago": "2025-11-28",
+      "secuencia_evento": "3",
+      "factor_actualizacion": "3",
+      "dividendo": "3",
+      "valor_historico": "3",
+      "fechaActualizacion": "2025-11-24",
+      "año": "3033",
+      "isfut": true
     }
   ]
 }

@@ -16,6 +16,17 @@ function App() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(false);
 
+  const [calificacionActualizar, setCalificacionActualizar] = useState(null);
+
+  const manejarActualizar = (item) => {
+    if (item){
+      setCalificacionActualizar(item);
+    }else {
+      setCalificacionActualizar(null);
+    }
+
+  };
+
   const [mercados, setMercados] = useState([]);
   const [origenes, setOrigenes] = useState([]);
   const [periodos, setPeriodos] = useState([]);
@@ -95,8 +106,8 @@ function App() {
       <h1 className="text-primary">Calificaciones Tributarias</h1>
       <hr/>
       <Busqueda Cambiando={Cambiando} mercados={mercados} origenes={origenes} periodos={periodos}/>
-      <Tabla mercadoBusqueda={filtros.mercado} origenBusqueda={filtros.origen} periodoBusqueda={filtros.periodo} pendienteBusqueda={filtros.pendiente} calificaciones={data} urlApi={"http://localhost:3000/calificaciones"} cambioCalificaciones={conseguirData}/>
-      <Botones mercados={mercados} origenes={origenes} periodos={periodos} urlApi={"http://localhost:3000/calificaciones"} cambioCalificaciones={conseguirData}/>
+      <Tabla mercadoBusqueda={filtros.mercado} origenBusqueda={filtros.origen} periodoBusqueda={filtros.periodo} pendienteBusqueda={filtros.pendiente} calificaciones={data} urlApi={"http://localhost:3000/calificaciones"} cambioCalificaciones={conseguirData} manejarActualizar={manejarActualizar}/>
+      <Botones mercados={mercados} origenes={origenes} periodos={periodos} urlApi={"http://localhost:3000/calificaciones"} cambioCalificaciones={conseguirData} calificacionActualizar={calificacionActualizar} manejarActualizar={manejarActualizar}/>
     </div>
   );
 }
