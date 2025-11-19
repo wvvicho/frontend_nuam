@@ -8,12 +8,12 @@ function Boton ({nombre, manejarAbrir}) {
          ?
          <button className="btn btn-primary on" onClick={manejarAbrir}>{nombre}</button>
          :
-         <button className="btn bg-white border border-primary text-primary">{nombre}</button>
+         <button className="btn bg-white border border-primary text-primary text-nowrap">{nombre}</button>
          }
     </div>
 };
 
-function Botones ({mercados, origenes, periodos, urlApi}) {
+function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones}) {
     const [abrir, setAbrir] = useState(false);
     const [calificacion, setCalificacion] = useState(null);
 
@@ -39,8 +39,13 @@ function Botones ({mercados, origenes, periodos, urlApi}) {
                     });
 
                     const calificacionCreada = await respuesta.json();
-                    console.log("POST exitoso: ", calificacionCreada);
 
+                    if (calificacionCreada) {
+                        console.log("Calificación ingresada con éxito");
+                        cambioCalificaciones();
+                    } else {
+                        console.log("Error de ingreso");
+                    }
                 } catch (error){
                     console.log("Error al ingresar calificación")
                 }        
@@ -57,8 +62,11 @@ function Botones ({mercados, origenes, periodos, urlApi}) {
         transform: 'translate(-50%, -50%)',
         bgcolor: 'white',
         p: 4,
-        width: '80%',
-        height:'80%',
+        width: '90%',
+        maxWidth: '1400px',
+        height:'auto',
+        maxHeight: '90vh',
+        overflowY: 'auto',
         border:'2px solid lightblue',
         borderRadius:'15px',
         textAlign: 'start',
@@ -71,6 +79,7 @@ function Botones ({mercados, origenes, periodos, urlApi}) {
             <Modal
             open={abrir}
             onClose={manejarCerrar}
+            className="Modal"
             aria-labelledby="modal-titulo"
             aria-describedby="modal-cuerpo"
             >
@@ -81,12 +90,8 @@ function Botones ({mercados, origenes, periodos, urlApi}) {
                     
                 </Box>
             </Modal>
-            <Boton nombre={"MODIFICAR"}/>
-            <Boton nombre={"ELIMINAR"}/>
-            <Boton nombre={"COPIAR"}/>
             <Boton nombre={"CARGA POR MONTO"}/>
             <Boton nombre={"CARGA POR FACTOR"}/>
-            
         </div>
     )
 };

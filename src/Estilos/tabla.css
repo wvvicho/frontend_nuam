@@ -10,6 +10,6 @@
 
 .table-responsive thead .filtros {
     position: sticky;
-    top: 41px;
+    top: 0;
 }
 

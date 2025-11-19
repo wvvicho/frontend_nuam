@@ -1,7 +1,7 @@
 import { useState } from "react";
 import '../Estilos/tabla.css';
 
-function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones }) {
+function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlApi, cambioCalificaciones}) {
 
     const [ejercicio, setEjercicio] = useState('');
     const [instrumento, setInstrumento] = useState('');
@@ -24,11 +24,38 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
         calificacion.factor_actualizacion.toLowerCase().includes(factor_actualizacion.toLowerCase())
     ));
 
+    const eliminarCalificacion = async (id) => {
+        if (!id) {
+            console.log("No se proporcionó ID");
+        }
+        try {
+            const API = `${urlApi}/${id}`;
+            console.log("URL: ",API );
+            const respuesta = await fetch(API, {
+                method:'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            if (respuesta.ok) {
+                console.log("Calificación eliminada con éxito")
+                cambioCalificaciones();
+            } else {
+                const Error = respuesta.statusText;
+                console.log(Error);
+            }
+        } catch (error) {
+            console.log("Error: ",error);
+        }
+    };
+
     return (
         <div className="mt-3 table-responsive mb-4">
             <table className="table table-bordered table-fixed-header">
                 <thead>
                     <tr className="table-row text-nowrap">
+                        <th scope="col">Acciones</th>
                         <th scope="col">Ejercicio</th>
                         <th scope="col">Instrumento</th>
                         <th scope="col">Fecha Pago</th>
@@ -37,59 +64,66 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                         <th scope="col">Factor de Actualización</th>
                     </tr>
                     <tr className="filtros">
-                       <td>
+                        <td>
+
+                        </td>
+                        <td>
                             <input type="text" 
                                     id="ejercicio" 
                                     value={ejercicio}
                                     onChange={ e => setEjercicio(e.target.value)}
                                     />
                             <i class="bi bi-funnel"/>
-                       </td>
-                       <td>
+                        </td>
+                        <td>
                             <input type="text" 
                                     id="instrumento" 
                                     value={instrumento}
                                     onChange={ e => setInstrumento(e.target.value)}
                                     />
                             <i class="bi bi-funnel"/>
-                       </td>
-                       <td>
+                        </td>
+                        <td>
                             <input type="text" 
                                     id="fecha_pago" 
                                     value={fecha_pago}
                                     onChange={ e => setFechaPago(e.target.value)}
                                     />
                             <i class="bi bi-funnel"/>
-                       </td>
-                       <td>
+                        </td>
+                        <td>
                             <input type="text" 
                                     id="descripcion" 
                                     value={descripcion}
                                     onChange={ e => setDescripcion(e.target.value)}
                                     />
                             <i class="bi bi-funnel"/>
-                       </td>
-                       <td>
+                        </td>
+                        <td>
                             <input type="text" 
                                     id="secuencia_evento" 
                                     value={secuencia_evento}
                                     onChange={ e => setSecuenciaEvento(e.target.value)}
                                     />
                             <i class="bi bi-funnel"/>
-                       </td>
-                       <td>
+                        </td>
+                        <td>
                             <input type="text" 
                                     id="factor_actualizacion" 
                                     value={factor_actualizacion}
                                     onChange={ e => setFactorActualizacion(e.target.value)}
                                     />
                             <i class="bi bi-funnel"/>
-                       </td>
+                        </td>
                     </tr>
                 </thead>
                 <tbody>
                     {CalificacionesFiltrada.map((item, index) => (
                         <tr key={index}>
+                            <td className="d-flex gap-3">
+                                <button className="btn btn-warning w-50">Actualizar</button> 
+                                <button className="btn btn-danger w-50" onClick={() => eliminarCalificacion(item.id)}>Eliminar</button>
+                            </td>
                             <td>{item.ejercicio}</td>
                             <td>{item.instrumento}</td>
                             <td>{item.fecha_pago}</td>
