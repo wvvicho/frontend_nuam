@@ -30,7 +30,6 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
         }
         try {
             const API = `${urlApi}/${id}`;
-            console.log("URL: ",API );
             const respuesta = await fetch(API, {
                 method:'DELETE',
                 headers: {

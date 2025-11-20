@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function FormIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio, calificacionActualizar}) {
+function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio, calificacionActualizar, manejarSiguiente}) {
     
 
 
@@ -20,7 +20,6 @@ function FormIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio
     const [isfut, setISFUT] = useState(false);
     
     const [errorIngreso, setErrorIngreso] = useState(false);
-
 
     const limpiarCampos = () => {
         setMercado('');
@@ -167,6 +166,7 @@ function FormIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio
                     <div className="d-flex flex-row gap-2 justify-content-end w-100 flex-wrap">
                         <button onClick={manejarCerrar} className="btn btn-danger">Cancelar</button>
                         <button type="submit" className="btn btn-success">Ingresar</button>
+                        <button className="btn btn-primary" onClick={manejarSiguiente}>Siguiente</button>
                         {errorIngreso ?
                         <h1 className="text-danger">{errorIngreso}</h1>
                         :
@@ -179,4 +179,4 @@ function FormIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio
     )
 };
 
-export default FormIngreso;
+export default FormularioIngreso;

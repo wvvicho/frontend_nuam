@@ -1,19 +1,6 @@
 {
   "calificaciones": [
     {
-      "id": "1",
-      "mercado": "MX",
-      "origen": "Banco",
-      "periodo": "2024-T1",
-      "ejercicio": "2024",
-      "instrumento": "PAGARE",
-      "fecha_pago": "2024-03-15",
-      "descripcion": "Pago trimestral de intereses",
-      "secuencia_evento": "001",
-      "factor_actualizacion": "1.000",
-      "calificacion_pendiente": false
-    },
-    {
       "id": "2",
       "mercado": "US",
       "origen": "Estatico",
@@ -133,23 +120,6 @@
       "fechaActualizacion": "2025-11-21",
       "año": "2023",
       "isfut": false
-    },
-    {
-      "id": "6d88",
-      "mercado": "MX",
-      "origen": "Banco",
-      "periodo": "2023-T4",
-      "ejercicio": "3",
-      "instrumento": "3",
-      "descripcion": "3",
-      "fecha_pago": "2025-11-28",
-      "secuencia_evento": "3",
-      "factor_actualizacion": "3",
-      "dividendo": "3",
-      "valor_historico": "3",
-      "fechaActualizacion": "2025-11-24",
-      "año": "3033",
-      "isfut": true
     }
   ]
 }

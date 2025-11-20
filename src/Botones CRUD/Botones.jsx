@@ -1,6 +1,7 @@
 import {  Modal, Box } from "@mui/material";
 import { act, useEffect, useState } from "react";
-import FormIngreso from "../Formularios/FormularioIngreso"
+import FormularioIngreso from "../Formularios/FormularioIngreso"
+import FormularioFactores from "../Formularios/FormularioFactores";
 
 function Boton ({nombre, manejarAbrir}) {
     return <div>
@@ -16,14 +17,25 @@ function Boton ({nombre, manejarAbrir}) {
 function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, calificacionActualizar, manejarActualizar}) {
     const [abrir, setAbrir] = useState(false);
     const [calificacion, setCalificacion] = useState(null);
+    const [siguiente, setSiguiente] = useState(false);
 
     const manejarAbrir = () => setAbrir(true);
+    
     const manejarCerrar = () => {
         setAbrir(false);
         if (calificacionActualizar) {
             manejarActualizar();
         }
     };
+
+    const manejarSiguiente = () => {
+        setSiguiente(true);
+    };
+
+    const manejarVolver = () => {
+        setSiguiente(false);
+    };
+
     const manejarEnvio = (datos) => {
         setCalificacion(datos);
         manejarCerrar();
@@ -109,7 +121,11 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
                 <Box sx={estiloModal}>
                     <h2 id="modal-titulo" className="text-primary">Ingresar calificación</h2>
                     <hr />
-                    <FormIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} manejarEnvio={manejarEnvio} calificacionActualizar={calificacionActualizar}/>
+                    {
+                        siguiente ?
+                        <FormularioFactores manejarCerrar={manejarCerrar} manejarVolver={manejarVolver}/> :
+                        <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} manejarEnvio={manejarEnvio} calificacionActualizar={calificacionActualizar} manejarSiguiente={manejarSiguiente}/>
+                    }
                 </Box>
             </Modal>
             <Boton nombre={"CARGA POR MONTO"}/>
