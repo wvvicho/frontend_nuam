@@ -1,5 +1,5 @@
 import {  Modal, Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import FormIngreso from "../Formularios/FormularioIngreso"
 
 function Boton ({nombre, manejarAbrir}) {
@@ -18,7 +18,12 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
     const [calificacion, setCalificacion] = useState(null);
 
     const manejarAbrir = () => setAbrir(true);
-    const manejarCerrar = () => setAbrir(false);
+    const manejarCerrar = () => {
+        setAbrir(false);
+        if (calificacionActualizar) {
+            manejarActualizar();
+        }
+    };
     const manejarEnvio = (datos) => {
         setCalificacion(datos);
         manejarCerrar();
@@ -28,26 +33,37 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
         if (calificacionActualizar != null){
             manejarAbrir();
         }
-    }, calificacionActualizar)
+    }, [calificacionActualizar])
 
     useEffect(() => {
         const API = urlApi;
 
         if (calificacion) {
+            const id = calificacion.id;
+            const actualizar = !!id;
+
             const ingresoCalificacion = async () => {
                 try {
-                    const respuesta = await fetch(API, {
-                        method: 'POST',
+                    const url = actualizar ? `${API}/${id}` : API;
+                    const metodo = actualizar ? 'PUT' : 'POST';
+
+                    const dataCalificacion = {...calificacion};
+                    if (!actualizar) { //Si es POST
+                        delete dataCalificacion.id;
+                    }
+
+                    const respuesta = await fetch(url, {
+                        method: metodo,
                         headers: {
                             'Content-Type':'application/json',
                         },
-                        body: JSON.stringify(calificacion),
+                        body: JSON.stringify(dataCalificacion),
                     });
 
                     const calificacionCreada = await respuesta.json();
 
                     if (calificacionCreada) {
-                        console.log("Calificación ingresada con éxito");
+                        console.log(`"Calificación ${actualizar ? 'actualizada' : 'ingresada'} con éxito"`);
                         manejarActualizar();
                         cambioCalificaciones();
                     } else {

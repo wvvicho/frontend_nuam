@@ -21,6 +21,24 @@ function FormIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio
     
     const [errorIngreso, setErrorIngreso] = useState(false);
 
+
+    const limpiarCampos = () => {
+        setMercado('');
+        setOrigen('');
+        setPeriodo('');
+        setEjercicio('');
+        setInstrumento('');
+        setDescripcion('');
+        setFechaPago('');
+        setSecuenciaEvento('');
+        setFactorActualizacion('');
+        setDividendo('');
+        setValorHistorico('');
+        setFechaActualizacion('');
+        setAño('');
+        setISFUT(false);
+    };
+
     useEffect(() => {
         if (calificacionActualizar != null){
             setMercado(calificacionActualizar.mercado || '');
@@ -34,24 +52,11 @@ function FormIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio
             setFactorActualizacion(calificacionActualizar.factor_actualizacion || '');
             setDividendo(calificacionActualizar.dividendo || '');
             setValorHistorico(calificacionActualizar.valor_historico || '');
-            setFechaActualizacion(calificacionActualizar.fecha_actualizacion || '');
+            setFechaActualizacion(calificacionActualizar.fechaActualizacion || '');
             setAño(calificacionActualizar.año || '');
             setISFUT(calificacionActualizar.isfut || false);
         } else {
-            setMercado('');
-            setOrigen('');
-            setPeriodo('');
-            setEjercicio('');
-            setInstrumento('');
-            setDescripcion('');
-            setFechaPago('');
-            setSecuenciaEvento('');
-            setFactorActualizacion('');
-            setDividendo('');
-            setValorHistorico('');
-            setFechaActualizacion('');
-            setAño('');
-            setISFUT(false);
+            limpiarCampos();
         }
     }, [calificacionActualizar]);
 
