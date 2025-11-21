@@ -163,7 +163,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
                     <label htmlFor="isfut" className="form-label">ISFUT</label>
                     <input type="checkbox" name="isfut" id="isfut" className="form-check-input border-black" value={isfut} onChange={(e) => setISFUT(e.target.checked)} checked={isfut}/> 
 
-                    <div className="d-flex flex-row gap-2 justify-content-end w-100 flex-wrap">
+                    <div className="d-flex flex-row gap-2 justify-content-end w-100 flex-wrap mt-3">
                         <button onClick={manejarCerrar} className="btn btn-danger">Cancelar</button>
                         <button type="submit" className="btn btn-success">Ingresar</button>
                         <button className="btn btn-primary" onClick={manejarSiguiente}>Siguiente</button>
