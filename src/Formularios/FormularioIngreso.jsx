@@ -128,7 +128,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
                     </select>
 
                     <label htmlFor="ejercicio" className="form-label">Ejercicio</label>
-                    <input type="text" name="ejercicio" id="ejercicio" className="form-control mb-3 border-black" value={ejercicio} onChange={(e) => setEjercicio(e.target.value)}/>
+                    <input type="number" name="ejercicio" id="ejercicio" className="form-control mb-3 border-black" value={ejercicio} onChange={(e) => setEjercicio(e.target.value)}/>
 
                     <label htmlFor="instrumento" className="form-label">Instrumento</label>
                     <input type="text" name="instrumento" id="instrumento" className="form-control mb-3 border-black" value={instrumento} onChange={(e) => setInstrumento(e.target.value)}/>
@@ -140,19 +140,19 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
                     <input type="date" name="fecha_pago" id="fecha_pago" className="form-control mb-3 border-black" value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)}/>
 
                     <label htmlFor="secuencia" className="form-label">Secuencia Evento</label>
-                    <input type="text" name="secuencia" id="secuencia" className="form-control mb-3 border-black"  value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
+                    <input type="number" name="secuencia" id="secuencia" className="form-control mb-3 border-black"  value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
 
                     <label htmlFor="dividendo" className="form-label">Dividendo</label>
-                    <input type="text" name="dividendo" id="dividendo" className="form-control mb-3 border-black" value={dividendo} onChange={(e) => setDividendo(e.target.value)}/>
+                    <input type="number" name="dividendo" id="dividendo" className="form-control mb-3 border-black" value={dividendo} onChange={(e) => setDividendo(e.target.value)}/>
 
                     <label htmlFor="valor">Valor histórico</label>
-                    <input type="text" name="valor" id="valor" className="form-control mb-3 border-black" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)}/>
+                    <input type="number" name="valor" id="valor" className="form-control mb-3 border-black" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)}/>
                 </div>
 
                 <div className="col-lg-6 d-flex flex-column align-items-start">
 
                     <label htmlFor="factor_actualizacion" className="form-label">Factor actualización</label>
-                    <input type="text" name="factor_actualizacion" id="factor_actualizacion" className="form-control mb-3 border-black" value={factor_actualizacion} onChange={(e) => setFactorActualizacion(e.target.value)}/>   
+                    <input type="number" name="factor_actualizacion" id="factor_actualizacion" className="form-control mb-3 border-black" value={factor_actualizacion} onChange={(e) => setFactorActualizacion(e.target.value)}/>   
 
                     <label htmlFor="fecha_actualizacion" className="form-label">Fecha de actualización</label>
                     <input type="date" name="fecha_actualizacion" id="fecha_actualizacion" className="form-control mb-3 border-black" value={fechaActualizacion} onChange={(e) => setFechaActualizacion(e.target.value)}/>

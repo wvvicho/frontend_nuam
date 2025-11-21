@@ -98,7 +98,7 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
         bgcolor: 'white',
         p: 4,
         width: '90%',
-        maxWidth: '1400px',
+        maxWidth: '90%',
         height:'auto',
         maxHeight: '90vh',
         overflowY: 'auto',
