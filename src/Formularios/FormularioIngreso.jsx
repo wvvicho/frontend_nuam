@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, manejarEnvio, calificacionActualizar, manejarSiguiente}) {
+function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, calificacionActualizar, manejarSiguiente}) {
     
 
 
@@ -16,7 +16,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
     const [dividendo, setDividendo] = useState('');
     const [valor_historico, setValorHistorico] = useState('');
     const [fechaActualizacion, setFechaActualizacion] = useState('');
-    const [año, setAño] = useState('');
+    const [anio, setAnio] = useState('');
     const [isfut, setISFUT] = useState(false);
     
     const [errorIngreso, setErrorIngreso] = useState(false);
@@ -34,7 +34,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
         setDividendo('');
         setValorHistorico('');
         setFechaActualizacion('');
-        setAño('');
+        setAnio('');
         setISFUT(false);
     };
 
@@ -52,15 +52,14 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
             setDividendo(calificacionActualizar.dividendo || '');
             setValorHistorico(calificacionActualizar.valor_historico || '');
             setFechaActualizacion(calificacionActualizar.fechaActualizacion || '');
-            setAño(calificacionActualizar.año || '');
+            setAnio(calificacionActualizar.anio || '');
             setISFUT(calificacionActualizar.isfut || false);
         } else {
             limpiarCampos();
         }
     }, [calificacionActualizar]);
 
-    const manejarSubmit = (e) => {
-        e.preventDefault();
+    const siguiente = () => {
         if (
             mercado != '' && 
             origen != '' && 
@@ -73,7 +72,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
             dividendo != '' &&
             valor_historico != '' &&
             fechaActualizacion != '' &&
-            año != '') {
+            anio != '') {
                 const datos = 
                 {
                     id: calificacionActualizar ? calificacionActualizar.id : undefined,
@@ -89,11 +88,11 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
                     dividendo, 
                     valor_historico, 
                     fechaActualizacion, 
-                    año, 
+                    anio, 
                     isfut
                 };
                 console.log(datos);
-                manejarEnvio(datos);
+                manejarSiguiente(datos);
         }else{
             setErrorIngreso("Por favor rellene todos los campos necesarios.")
         }
@@ -101,29 +100,29 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
     
     return (
         <div>
-            <form className="form d-flex flex-wrap gap-5" onSubmit={manejarSubmit}>
+            <form className="form d-flex flex-wrap gap-5">
                 <div className="col-lg-5 d-flex flex-column justify-content-start">
                     <label htmlFor="mercados" className="form-label">Mercado</label>
                     <select name="mercados" id="mercados" className="form-select mb-3 border-black" value={mercado} onChange={(e) => setMercado(e.target.value)}>
                         <option></option>
-                        {mercados.map( (item, index) => (
-                            <option key={index} value={item}>{item}</option>
+                        {mercados.map( (mercado, index) => (
+                            <option key={index} value={mercado}>{mercado.nombre}</option>
                         ))}
                     </select>
 
                     <label htmlFor="origenes" className="form-label">Origen</label>
                     <select name="origenes" id="origenes" className="form-select mb-3 border-black" value={origen} onChange={(e) => setOrigen(e.target.value)}>
                         <option></option>
-                        {origenes.map( (item, index) => (
-                            <option key={index} value={item}>{item}</option>
+                        {origenes.map( (origen, index) => (
+                            <option key={index} value={origen}>{origen.nombre}</option>
                         ))}
                     </select>
 
                     <label htmlFor="periodos" className="form-label">Periodo</label>
                     <select name="periodos" id="periodos" className="form-select mb-3 border-black" value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
                         <option></option>
-                        {periodos.map( (item, index) => (
-                            <option key={index} value={item}>{item}</option>
+                        {periodos.map( (periodo, index) => (
+                            <option key={index} value={periodo}>{periodo}</option>
                         ))}
                     </select>
 
@@ -157,16 +156,15 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, maneja
                     <label htmlFor="fecha_actualizacion" className="form-label">Fecha de actualización</label>
                     <input type="date" name="fecha_actualizacion" id="fecha_actualizacion" className="form-control mb-3 border-black" value={fechaActualizacion} onChange={(e) => setFechaActualizacion(e.target.value)}/>
 
-                    <label htmlFor="año" className="form-label">Año</label>
-                    <input type="number" name="año" id="año" className="form-control mb-3 border-black" value={año} onChange={(e) => setAño(e.target.value)}/> 
+                    <label htmlFor="anio" className="form-label">Año</label>
+                    <input type="number" name="anio" id="anio" className="form-control mb-3 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/> 
 
                     <label htmlFor="isfut" className="form-label">ISFUT</label>
                     <input type="checkbox" name="isfut" id="isfut" className="form-check-input border-black" value={isfut} onChange={(e) => setISFUT(e.target.checked)} checked={isfut}/> 
 
                     <div className="d-flex flex-row gap-2 justify-content-end w-100 flex-wrap mt-3">
-                        <button onClick={manejarCerrar} className="btn btn-danger">Cancelar</button>
-                        <button type="submit" className="btn btn-success">Ingresar</button>
-                        <button className="btn btn-primary" onClick={manejarSiguiente}>Siguiente</button>
+                        <button className="btn btn-danger" type="button" onClick={manejarCerrar}>Cancelar</button>
+                        <button className="btn btn-primary" type="button" onClick={siguiente}>Siguiente</button>
                         {errorIngreso ?
                         <h1 className="text-danger">{errorIngreso}</h1>
                         :

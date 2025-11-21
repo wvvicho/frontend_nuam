@@ -103,23 +103,6 @@
       "secuencia_evento": "009",
       "factor_actualizacion": "1.000",
       "calificacion_pendiente": true
-    },
-    {
-      "id": "316a",
-      "mercado": "EU",
-      "origen": "Estatico",
-      "periodo": "2024-T3",
-      "ejercicio": "3",
-      "instrumento": "1",
-      "descripcion": "",
-      "fecha_pago": "2025-11-27",
-      "secuencia_evento": "11",
-      "factor_actualizacion": "1",
-      "dividendo": "11",
-      "valor_historico": "1",
-      "fechaActualizacion": "2025-11-21",
-      "año": "2023",
-      "isfut": false
     }
   ]
 }

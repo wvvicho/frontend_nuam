@@ -1,4 +1,28 @@
-function FormularioFactores ({manejarCerrar, manejarVolver}) {
+import { useEffect, useState } from "react";
+
+function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnvio, calificacion}) {
+    
+    const [mercado, setMercado] = useState(calificacion.mercado);
+    const [instrumento, setInstrumento] = useState(calificacion.instrumento);
+    const [valor_historico, setValorHistorico] = useState(calificacion.valor_historico)
+    const [fecha_pago, setFechaPago] = useState(calificacion.fecha_pago);
+    const [descripcion, setDescripcion] = useState(calificacion.descripcion);
+    const [secuencia_evento, setSecuenciaEvento] = useState(calificacion.secuencia_evento);
+    const [anio, setAnio] = useState(calificacion.anio);
+    const [ingreso_por_montos, setIngresoPorMontos] = useState('');
+
+
+    /*useEffect(() => {
+        setMercado(calificacion.mercado);
+        setInstrumento(calificacion.instrumento);
+        setValorHistorico(calificacion.valor_historico);
+        setFechaPago(calificacion.fecha_pago);
+        setDescripcion(calificacion.descripcion);
+        setSecuenciaEvento(calificacion.secuencia_evento);
+        setAnio(calificacion.anio);
+
+    }, [calificacion]);*/
+
     return (
         <div>
             <form className="form">
@@ -8,46 +32,51 @@ function FormularioFactores ({manejarCerrar, manejarVolver}) {
                     <div className="d-flex flex-column gap-2 col-4 pe-3">
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="mercado" className="form-label text-nowrap me-2">Mercado</label>
-                            <input type="text" name="mercado" id="mercado" className="form-control w-50 border-black" />
+                            <select name="mercados" id="mercados" className="form-select border-black w-50" value={mercado} onChange={(e) => setMercado(e.target.value)}>
+                                <option></option>
+                                {mercados.map( (mercado, index) => (
+                                    <option key={index} value={mercado}>{mercado.nombre}</option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="fecha_pago" className="form-label text-nowrap me-2">Fecha Pago</label>
-                            <input type="date" name="fecha_pago" id="fecha_pago" className="form-control w-50 border-black"/>
+                            <input type="date" name="fecha_pago" id="fecha_pago" className="form-control w-50 border-black" value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)}/>
                         </div>
 
                         <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="año" className="form-label text-nowrap me-2">Año</label>
-                            <input type="number" name="año" id="año" className="form-control w-50 border-black"/>
+                            <label htmlFor="anio" className="form-label text-nowrap me-2">Año</label>
+                            <input type="number" name="anio" id="anio" className="form-control w-50 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/>
                         </div> 
                     </div>
 
                     <div className="d-flex flex-column gap-2 col-4 pe-3">
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="instrumento" className="form-label text-nowrap me-2">Instrumento</label>
-                            <input type="text" name="instrumento" id="instrumento" className="form-control w-50 border-black"/>
+                            <input type="text" name="instrumento" id="instrumento" className="form-control w-50 border-black" value={instrumento} onChange={(e) => setInstrumento(e.target.value)}/>
                         </div>
 
                         <div className="d-flex align-items-center justify-content-between align-self-start w-100">
                             <label htmlFor="descripcion" className="form-label text-nowrap me-2">Descripción</label>
-                            <textarea name="descripcion" id="descripcion" className="form-control w-50 border-black"/>
+                            <textarea name="descripcion" id="descripcion" className="form-control w-50 border-black" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
                         </div>
                         
                         <div className="d-flex align-items-center justify-content-start w-100">
                             <label htmlFor="ingreso_por_montos" className="form-check-label text-nowrap me-2">Ingreso por Montos</label>
-                            <input type="checkbox" name="ingreso_por_montos" id="ingreso_por_montos" className="form-check-input border-black"/>
+                            <input type="checkbox" name="ingreso_por_montos" id="ingreso_por_montos" className="form-check-input border-black" value={ingreso_por_montos} onChange={(e) => setIngresoPorMontos(e.target.value)}/>
                         </div>
                     </div>
 
                     <div className="d-flex flex-column gap-2 col-4">
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="valor_historico" className="form-label text-nowrap me-2">Valor Histórico</label>
-                            <input type="number" name="valor_historico" id="valor_historico" className="form-control w-50 border-black"/>
+                            <input type="number" name="valor_historico" id="valor_historico" className="form-control w-50 border-black" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)}/>
                         </div>
 
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="secuencia_evento" className="form-label text-nowrap me-2">Secuencia Evento</label>
-                            <input type="number" name="secuencia_evento" id="secuencia_evento" className="form-control w-50 border-black"/>
+                            <input type="number" name="secuencia_evento" id="secuencia_evento" className="form-control w-50 border-black" value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
                         </div>
                     </div>
                 </div>
@@ -145,7 +174,7 @@ function FormularioFactores ({manejarCerrar, manejarVolver}) {
 
                             {/*Rentas Exentas */}
                             <div className="d-flex align-items-center justify-content-between">
-                                <label htmlFor="rentas_exentas" className="form-label me-2">Rentas Exentas de Impto. GC Y/O Impto. Adicional</label>
+                                <label htmlFor="rentas_exentas" className="form-label me-2">Factor-18 Rentas Exentas de Impto. GC Y/O Impto. Adicional</label>
                                 <input type="number" name="rentas_exentas" id="rentas_exentas" className="form-control w-50 border-black" />
                             </div>
 

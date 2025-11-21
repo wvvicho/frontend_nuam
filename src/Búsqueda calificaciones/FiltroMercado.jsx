@@ -12,7 +12,7 @@ function FiltroMercado({valorActual, manejarCambio, mercados}) {
                     >
                         <option></option>
                {mercados.map((item, index) => (
-                  <option key={index}>{item}</option>
+                  <option key={index}>{item.nombre}</option>
                 ))}
             </select>
         </div>

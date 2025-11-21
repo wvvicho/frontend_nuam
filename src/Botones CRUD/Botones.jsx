@@ -1,5 +1,5 @@
 import {  Modal, Box } from "@mui/material";
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FormularioIngreso from "../Formularios/FormularioIngreso"
 import FormularioFactores from "../Formularios/FormularioFactores";
 
@@ -22,13 +22,15 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
     const manejarAbrir = () => setAbrir(true);
     
     const manejarCerrar = () => {
+        setCalificacion(null);
         setAbrir(false);
         if (calificacionActualizar) {
             manejarActualizar();
         }
     };
 
-    const manejarSiguiente = () => {
+    const manejarSiguiente = (datos) => {
+        setCalificacion(datos);
         setSiguiente(true);
     };
 
@@ -47,7 +49,7 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
         }
     }, [calificacionActualizar])
 
-    useEffect(() => {
+    /*useEffect(() => {
         const API = urlApi;
 
         if (calificacion) {
@@ -87,7 +89,7 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
             };
             ingresoCalificacion();
         };
-    },[calificacion]);
+    },[calificacion]);*/
 
 
     const estiloModal = {
@@ -123,8 +125,8 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
                     <hr />
                     {
                         siguiente ?
-                        <FormularioFactores manejarCerrar={manejarCerrar} manejarVolver={manejarVolver}/> :
-                        <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} manejarEnvio={manejarEnvio} calificacionActualizar={calificacionActualizar} manejarSiguiente={manejarSiguiente}/>
+                        <FormularioFactores mercados={mercados} manejarCerrar={manejarCerrar} manejarVolver={manejarVolver} manejarEnvio={manejarEnvio} calificacion={calificacion}/> :
+                        <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} calificacionActualizar={calificacionActualizar || calificacion} manejarSiguiente={manejarSiguiente}/>
                     }
                 </Box>
             </Modal>

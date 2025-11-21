@@ -11,7 +11,7 @@ function FiltroOrigen({valorActual, manejarCambio, origenes}) {
                     >
                         <option></option>
                {origenes.map((item, index) => (
-                  <option key={index}>{item}</option>
+                  <option key={index}>{item.nombre}</option>
                 ))}
             </select>
         </div>
