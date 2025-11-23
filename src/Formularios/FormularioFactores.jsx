@@ -1,15 +1,50 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnvio, calificacion}) {
     
-    const [mercado, setMercado] = useState(calificacion.mercado);
+    const [mercado, setMercado] = useState(calificacion.mercado ? calificacion.mercado.id : '');
     const [instrumento, setInstrumento] = useState(calificacion.instrumento);
     const [valor_historico, setValorHistorico] = useState(calificacion.valor_historico)
     const [fecha_pago, setFechaPago] = useState(calificacion.fecha_pago);
     const [descripcion, setDescripcion] = useState(calificacion.descripcion);
     const [secuencia_evento, setSecuenciaEvento] = useState(calificacion.secuencia_evento);
     const [anio, setAnio] = useState(calificacion.anio);
-    const [ingreso_por_montos, setIngresoPorMontos] = useState('');
+    const [ingreso_por_montos, setIngresoPorMontos] = useState(false);
+
+    const [factor_08, setFactor_08] = useState(null);
+    const [factor_09, setFactor_09] = useState(null);
+    const [factor_10, setFactor_10] = useState(null);
+    const [factor_11, setFactor_11] = useState(null);
+    const [factor_12, setFactor_12] = useState(null);
+    const [factor_13, setFactor_13] = useState(null);
+    const [factor_14, setFactor_14] = useState(null);
+    const [factor_15, setFactor_15] = useState(null);
+    const [factor_16, setFactor_16] = useState(null);
+    const [factor_17, setFactor_17] = useState(null);
+    const [factor_18, setFactor_18] = useState(null);
+    const [factor_19, setFactor_19] = useState(null);
+    const [factor_20, setFactor_20] = useState(null);
+    const [factor_21, setFactor_21] = useState(null);
+    const [factor_22, setFactor_22] = useState(null);
+    const [factor_23, setFactor_23] = useState(null);
+    const [factor_24, setFactor_24] = useState(null);
+    const [factor_25, setFactor_25] = useState(null);
+    const [factor_26, setFactor_26] = useState(null);
+    const [factor_27, setFactor_27] = useState(null);
+    const [factor_28, setFactor_28] = useState(null);
+    const [factor_29, setFactor_29] = useState(null);
+    const [factor_30, setFactor_30] = useState(null);
+    const [factor_31, setFactor_31] = useState(null);
+    const [factor_32, setFactor_32] = useState(null);
+    const [factor_33, setFactor_33] = useState(null);
+    const [factor_34, setFactor_34] = useState(null);
+    const [factor_35, setFactor_35] = useState(null);
+    const [factor_36, setFactor_36] = useState(null);
+    const [factor_37, setFactor_37] = useState(null);
+    const [factor_38, setFactor_38] = useState(null);
+
+    const [errorIngreso, setErrorIngreso] = useState(false);
+
 
 
     /*useEffect(() => {
@@ -23,9 +58,116 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
 
     }, [calificacion]);*/
 
+    const manejarSubmit = (e) => {
+        e.preventDefault();
+        console.log("En Submit");
+
+        if (
+            mercado != '' && 
+            instrumento != '' && 
+            valor_historico != '' && 
+            fecha_pago != '' && 
+            descripcion != '' && 
+            secuencia_evento != '' &&
+            anio != '' &&
+            String(factor_08) != '' &&
+            String(factor_09) != '' &&
+            String(factor_10) != '' &&
+            String(factor_11) != '' &&
+            String(factor_12) != '' &&
+            String(factor_13) != '' &&
+            String(factor_14) != '' &&
+            String(factor_15) != '' &&
+            String(factor_16) != '' &&
+            String(factor_17) != '' &&
+            String(factor_18) != '' &&
+            String(factor_19) != '' &&
+            String(factor_20) != '' &&
+            String(factor_21) != '' &&
+            String(factor_22) != '' &&
+            String(factor_23) != '' &&
+            String(factor_24) != '' &&
+            String(factor_25) != '' &&
+            String(factor_26) != '' &&
+            String(factor_27) != '' &&
+            String(factor_28) != '' &&
+            String(factor_29) != '' &&
+            String(factor_30) != '' &&
+            String(factor_31) != '' &&
+            String(factor_32) != '' &&
+            String(factor_33) != '' &&
+            String(factor_34) != '' &&
+            String(factor_35) != '' &&
+            String(factor_36) != '' &&
+            String(factor_37) != '' &&
+            String(factor_38) != ''
+            )
+            {
+                const datos = {
+                    id: calificacion.id || undefined,
+                    ejercicio: parseInt(calificacion.ejercicio, 10),
+                    instrumento: calificacion.instrumento,
+                    fecha_pago: calificacion.fecha_pago,
+                    origen: parseInt(calificacion.origen?.id || calificacion.origen.id, 10), 
+                    mercado: parseInt(mercado, 10),
+                    periodo: parseInt(calificacion.periodo, 10),
+                    secuencia_evento: parseInt(calificacion.secuencia_evento, 10),
+                    factor_actualizacion: parseInt(calificacion.factor_actualizacion, 10),
+                    dividendo: parseInt(calificacion.dividendo, 10),
+                    valor_historico: parseFloat(calificacion.valor_historico),
+                    fechaActualizacion: calificacion.fechaActualizacion,
+                    anio: parseInt(calificacion.anio, 10),
+                    descripcion: calificacion.descripcion,
+                    factores: 
+                    [
+                        parseFloat(factor_08), 
+                        parseFloat(factor_09), 
+                        parseFloat(factor_10), 
+                        parseFloat(factor_11), 
+                        parseFloat(factor_12), 
+                        parseFloat(factor_13), 
+                        parseFloat(factor_14), 
+                        parseFloat(factor_15), 
+                        parseFloat(factor_16), 
+                        parseFloat(factor_17), 
+                        parseFloat(factor_18),
+                        parseFloat(factor_19),
+                        parseFloat(factor_20),
+                        parseFloat(factor_21),
+                        parseFloat(factor_22),
+                        parseFloat(factor_23),
+                        parseFloat(factor_24),
+                        parseFloat(factor_25),
+                        parseFloat(factor_26),
+                        parseFloat(factor_27),
+                        parseFloat(factor_28),
+                        parseFloat(factor_29),
+                        parseFloat(factor_30),
+                        parseFloat(factor_31),
+                        parseFloat(factor_32),
+                        parseFloat(factor_33),
+                        parseFloat(factor_34),
+                        parseFloat(factor_35),
+                        parseFloat(factor_36),
+                        parseFloat(factor_37),
+                        parseFloat(factor_38)
+                    ]
+                    
+                }
+
+                console.log(datos);
+                manejarEnvio(datos);
+            }
+            else 
+            {
+                console.log("Fallo de validación");
+                setErrorIngreso('Rellene todos los campos antes de ingresar');
+            }
+    }
+
     return (
         <div>
-            <form className="form">
+            <form className="form" onSubmit={manejarSubmit}>
                 {/*Formulario rellenado con los valores de FormularioIngreso*/}
                 <div className="d-flex flex-wrap justify-content-between">
 
@@ -33,9 +175,9 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="mercado" className="form-label text-nowrap me-2">Mercado</label>
                             <select name="mercados" id="mercados" className="form-select border-black w-50" value={mercado} onChange={(e) => setMercado(e.target.value)}>
-                                <option></option>
+                                <option>Seleccione mercado</option>
                                 {mercados.map( (mercado, index) => (
-                                    <option key={index} value={mercado}>{mercado.nombre}</option>
+                                    <option key={index} value={mercado.id}>{mercado.nombre}</option>
                                 ))}
                             </select>
                         </div>
@@ -89,67 +231,67 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                             {/*Factor 08 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_08" className="form-label me-2">Factor-08 No Constitutiva de Renta No Acogido a Impto.</label>
-                                <input type="number" name="factor_08" id="factor_08" className="form-control border-black" />
+                                <input type="number" name="factor_08" id="factor_08" className="form-control border-black" onChange={e => setFactor_08(e.target.value)}/>
                             </div>
 
                             {/*Factor 11 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_11" className="form-label me-2">Factor-11 Incremento Impuesto 1ra Categoría</label>
-                                <input type="number" name="factor_11" id="factor_11" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_11" id="factor_11" className="form-control w-50 border-black" onChange={e => setFactor_11(e.target.value)}/>
                             </div>
 
                             {/*Factor 14 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_14" className="form-label me-2">Factor-14 Impto. 1ra Categ. Exento GI. Comp. Sin Devolución</label>
-                                <input type="number" name="factor_14" id="factor_14" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_14" id="factor_14" className="form-control w-50 border-black" onChange={e => setFactor_14(e.target.value)}/>
                             </div>
 
                             {/*Factor 17 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_17" className="form-label me-2">Factor-17 No Constitutiva de Renta Devolución de Capital Art.17</label>
-                                <input type="number" name="factor_17" id="factor_17" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_17" id="factor_17" className="form-control w-50 border-black" onChange={e => setFactor_17(e.target.value)}/>
                             </div>
 
                             {/*Factor 20 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_20" className="form-label me-2">Factor-20 Sin Derecho a Devolución</label>
-                                <input type="number" name="factor_20" id="factor_20" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_20" id="factor_20" className="form-control w-50 border-black" onChange={e => setFactor_20(e.target.value)}/>
                             </div>
 
                             {/*Factor 23 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_23" className="form-label me-2">Factor-23 Con Derecho a Devolución</label>
-                                <input type="number" name="factor_23" id="factor_23" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_23" id="factor_23" className="form-control w-50 border-black" onChange={e => setFactor_23(e.target.value)}/>
                             </div>
 
                             {/*Factor 26 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_26" className="form-label me-2">Factor-26 Sin Derecho a Devolución</label>
-                                <input type="number" name="factor_26" id="factor_26" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_26" id="factor_26" className="form-control w-50 border-black" onChange={e => setFactor_26(e.target.value)}/>
                             </div>
 
                             {/*Factor 29 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_29" className="form-label me-2">Factor-29 Sin Derecho a Devolución</label>
-                                <input type="number" name="factor_29" id="factor_29" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_29" id="factor_29" className="form-control w-50 border-black" onChange={e => setFactor_29(e.target.value)}/>
                             </div>
 
                             {/*Factor 32 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_32" className="form-label me-2">Factor-32 Con Derecho a Devolución</label>
-                                <input type="number" name="factor_32" id="factor_32" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_32" id="factor_32" className="form-control w-50 border-black" onChange={e => setFactor_32(e.target.value)}/>
                             </div>
 
                             {/*Factor 35 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_35" className="form-label me-2">Factor-35 Tasa Efectiva Del Cred. Del FUT (TEF)</label>
-                                <input type="number" name="factor_35" id="factor_35" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_35" id="factor_35" className="form-control w-50 border-black" onChange={e => setFactor_35(e.target.value)}/>
                             </div>
 
                             {/*Factor 38 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_38" className="form-label me-2">UI_FACTOR_38_DECRIPCIÓN</label>
-                                <input type="number" name="factor_38" id="factor_38" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_38" id="factor_38" className="form-control w-50 border-black" onChange={e => setFactor_38(e.target.value)}/>
                             </div>
                         </div>
 
@@ -157,61 +299,61 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                             {/*Factor 09 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_09" className="form-label me-2">Factor-09 Impto. 1ra Categ. Afecto GI. Comp. Con Devolución</label>
-                                <input type="number" name="factor_09" id="factor_09" className="form-control border-black" />
+                                <input type="number" name="factor_09" id="factor_09" className="form-control border-black" onChange={e => setFactor_09(e.target.value)}/>
                             </div>
 
                             {/*Factor 12 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_12" className="form-label me-2">Factor-12 Impto. 1ra Categ. Exento GI. Comp. Con Devolución</label>
-                                <input type="number" name="factor_12" id="factor_12" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_12" id="factor_12" className="form-control w-50 border-black" onChange={e => setFactor_12(e.target.value)}/>
                             </div>
 
                             {/*Factor 15 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_15" className="form-label me-2">Factor-15 Impto. Créditos pro Impuestos Externos</label>
-                                <input type="number" name="factor_15" id="factor_15" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_15" id="factor_15" className="form-control w-50 border-black" onChange={e => setFactor_15(e.target.value)}/>
                             </div>
 
-                            {/*Rentas Exentas */}
+                            {/*Factor 18 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="rentas_exentas" className="form-label me-2">Factor-18 Rentas Exentas de Impto. GC Y/O Impto. Adicional</label>
-                                <input type="number" name="rentas_exentas" id="rentas_exentas" className="form-control w-50 border-black" />
+                                <input type="number" name="rentas_exentas" id="rentas_exentas" className="form-control w-50 border-black" onChange={e => setFactor_18(e.target.value)}/>
                             </div>
 
                             {/*Factor 21 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_21" className="form-label me-2">Factor-21 Con Derecho a Devolución</label>
-                                <input type="number" name="factor_21" id="factor_21" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_21" id="factor_21" className="form-control w-50 border-black" onChange={e => setFactor_21(e.target.value)}/>
                             </div>
 
                             {/*Factor 24 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_24" className="form-label me-2">Factor-24 Sin Derecho a Devolución</label>
-                                <input type="number" name="factor_24" id="factor_24" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_24" id="factor_24" className="form-control w-50 border-black" onChange={e => setFactor_24(e.target.value)}/>
                             </div>
 
                             {/*Factor 27 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_26" className="form-label me-2">Factor-27 Con Derecho a Devolución</label>
-                                <input type="number" name="factor_27" id="factor_27" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_27" id="factor_27" className="form-control w-50 border-black" onChange={e => setFactor_27(e.target.value)}/>
                             </div>
 
                             {/*Factor 30 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_30" className="form-label me-2">Factor-30 Con Derecho a Devolución</label>
-                                <input type="number" name="factor_30" id="factor_30" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_30" id="factor_30" className="form-control w-50 border-black" onChange={e => setFactor_30(e.target.value)}/>
                             </div>
 
                             {/*Factor 33 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_33" className="form-label me-2">Factor-33 Crédito por IPE</label>
-                                <input type="number" name="factor_33" id="factor_33" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_33" id="factor_33" className="form-control w-50 border-black" onChange={e => setFactor_33(e.target.value)}/>
                             </div>
 
                             {/*Factor 36 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_36" className="form-label me-2">Factor-36 Tasa Efectiva Del Cred. Del FUNT (TEX)</label>
-                                <input type="number" name="factor_36" id="factor_36" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_36" id="factor_36" className="form-control w-50 border-black" onChange={e => setFactor_36(e.target.value)}/>
                             </div>
                         </div>
 
@@ -219,61 +361,61 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                             {/*Factor 10 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_10" className="form-label me-2">Factor-10 Impuesto Tasa Adicional Exento Art. 21</label>
-                                <input type="number" name="factor_10" id="factor_10" className="form-control border-black" />
+                                <input type="number" name="factor_10" id="factor_10" className="form-control border-black" onChange={e => setFactor_10(e.target.value)}/>
                             </div>
 
                             {/*Factor 13 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_13" className="form-label me-2">Factor-13 Impto. 1ra Categ. Afecto GI. Comp. Sin Devolución</label>
-                                <input type="number" name="factor_13" id="factor_13" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_13" id="factor_13" className="form-control w-50 border-black" onChange={e => setFactor_13(e.target.value)}/>
                             </div>
 
                             {/*Factor 16 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_16" className="form-label me-2">Factor-16 No Constitutiva de Renta Acogido a Impto.</label>
-                                <input type="number" name="factor_16" id="factor_16" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_16" id="factor_16" className="form-control w-50 border-black" onChange={e => setFactor_16(e.target.value)}/>
                             </div>
 
                             {/*Factor 19A */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_19a" className="form-label me-2">Factor-19A Ingreso no Constitutivos de Renta</label>
-                                <input type="number" name="factor_19a" id="factor_19a" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_19a" id="factor_19a" className="form-control w-50 border-black" onChange={e => setFactor_19(e.target.value)}/>
                             </div>
 
                             {/*Factor 22 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_22" className="form-label me-2">Factor-22 Sin Derecho a Devolución</label>
-                                <input type="number" name="factor_22" id="factor_22" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_22" id="factor_22" className="form-control w-50 border-black" onChange={e => setFactor_22(e.target.value)}/>
                             </div>
 
                             {/*Factor 25 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_25" className="form-label me-2">Factor-25 Con Derecho a Devolución</label>
-                                <input type="number" name="factor_25" id="factor_25" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_25" id="factor_25" className="form-control w-50 border-black" onChange={e => setFactor_25(e.target.value)}/>
                             </div>
 
                             {/*Factor 28 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_28" className="form-label me-2">Factor-28 Crédito por IPE</label>
-                                <input type="number" name="factor_28" id="factor_28" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_28" id="factor_28" className="form-control w-50 border-black" onChange={e => setFactor_28(e.target.value)}/>
                             </div>
 
                             {/*Factor 31 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_31" className="form-label me-2">Factor-31 Sin Derecho a Devolución</label>
-                                <input type="number" name="factor_31" id="factor_31" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_31" id="factor_31" className="form-control w-50 border-black" onChange={e => setFactor_31(e.target.value)}/>
                             </div>
 
                             {/*Factor 34 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_34" className="form-label me-2">Factor-34 Cred. Por Impto. Tasa Adicional, Ex Art. 21 LIR</label>
-                                <input type="number" name="factor_34" id="factor_34" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_34" id="factor_34" className="form-control w-50 border-black" onChange={e => setFactor_34(e.target.value)}/>
                             </div>
 
                             {/*Factor 37 */}
                             <div className="d-flex align-items-center justify-content-between">
                                 <label htmlFor="factor_37" className="form-label me-2">Factor-37 Devolución de Capital Art. 17 num 7 LIR</label>
-                                <input type="number" name="factor_37" id="factor_37" className="form-control w-50 border-black" />
+                                <input type="number" name="factor_37" id="factor_37" className="form-control w-50 border-black" onChange={e => setFactor_37(e.target.value)}/>
                             </div>
                         </div>
 
@@ -281,8 +423,15 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                 </div>
                 <hr />
                 <div className="d-flex flex-row gap-2 justify-content-end mt-3">
+                    {errorIngreso 
+                    ? 
+                        <p>{errorIngreso}</p>    
+                    :
+                        <span></span>
+                    }
                     <button className="btn btn-secondary" onClick={manejarVolver}>Volver</button>
                     <button className="btn btn-danger" onClick={() => {manejarCerrar(); manejarVolver();}}>Cancelar</button>
+                    <button className="btn btn-success" type="submit">Enviar</button>
                 </div>
             </form>
         </div>

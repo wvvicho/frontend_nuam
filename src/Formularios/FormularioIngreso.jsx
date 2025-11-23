@@ -40,8 +40,8 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
 
     useEffect(() => {
         if (calificacionActualizar != null){
-            setMercado(calificacionActualizar.mercado || '');
-            setOrigen(calificacionActualizar.origen || '');
+            setMercado(calificacionActualizar.mercado?.id || '');
+            setOrigen(calificacionActualizar.origen?.id || '');
             setPeriodo(calificacionActualizar.periodo || '');
             setEjercicio(calificacionActualizar.ejercicio || '');
             setInstrumento(calificacionActualizar.instrumento || '');
@@ -73,11 +73,13 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
             valor_historico != '' &&
             fechaActualizacion != '' &&
             anio != '') {
+                const Mercado = mercados.find(m => m.id === parseInt(mercado, 10));
+                const Origen = origenes.find(o => o.id === parseInt(origen, 10));
                 const datos = 
                 {
                     id: calificacionActualizar ? calificacionActualizar.id : undefined,
-                    mercado, 
-                    origen, 
+                    mercado: Mercado, 
+                    origen: Origen, 
                     periodo,
                     ejercicio, 
                     instrumento, 
@@ -106,7 +108,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
                     <select name="mercados" id="mercados" className="form-select mb-3 border-black" value={mercado} onChange={(e) => setMercado(e.target.value)}>
                         <option></option>
                         {mercados.map( (mercado, index) => (
-                            <option key={index} value={mercado}>{mercado.nombre}</option>
+                            <option key={index} value={mercado.id}>{mercado.nombre}</option>
                         ))}
                     </select>
 
@@ -114,7 +116,7 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
                     <select name="origenes" id="origenes" className="form-select mb-3 border-black" value={origen} onChange={(e) => setOrigen(e.target.value)}>
                         <option></option>
                         {origenes.map( (origen, index) => (
-                            <option key={index} value={origen}>{origen.nombre}</option>
+                            <option key={index} value={origen.id}>{origen.nombre}</option>
                         ))}
                     </select>
 
