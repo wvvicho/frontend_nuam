@@ -23,6 +23,9 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
     
     const manejarCerrar = () => {
         setAbrir(false);
+        setSiguiente(false);
+        setCalificacionIngresar(null);
+        
         if (calificacionActualizar) {
             manejarActualizar();
         }
@@ -86,49 +89,6 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
                     console.log("Error al ingresar calificación: ",error);
                 }        
             };
-
-    /*useEffect(() => {
-        const API = urlApi;
-
-        if (calificacion) {
-            const id = calificacion.id ? calificacion.id : null;
-            const actualizar = id;
-
-            const ingresoCalificacion = async () => {
-                try {
-                    console.log("Se ejecuta");
-                    const url = actualizar ? `${API}/${id}` : API;
-                    const metodo = actualizar ? 'PUT' : 'POST';
-
-                    const dataCalificacion = {...calificacion};
-                    if (!actualizar) { //Si es POST
-                        delete dataCalificacion.id;
-                    }
-
-                    const respuesta = await fetch(url, {
-                        method: metodo,
-                        headers: {
-                            'Content-Type':'application/json',
-                        },
-                        body: JSON.stringify(dataCalificacion),
-                    });
-
-                    const calificacionCreada = await respuesta.json();
-
-                    if (calificacionCreada) {
-                        console.log(`"Calificación ${actualizar ? 'actualizada' : 'ingresada'} con éxito"`);
-                        manejarActualizar();
-                        cambioCalificaciones();
-                    } else {
-                        console.log("Error de ingreso");
-                    }
-                } catch (error){
-                    console.log("Error al ingresar calificación")
-                }        
-            };
-            ingresoCalificacion();
-        };
-    },[calificacion]);*/
 
 
     const estiloModal = {

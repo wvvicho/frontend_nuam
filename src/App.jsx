@@ -80,7 +80,6 @@ function App() {
       const periodosData = calificaciones.map(calificacion => calificacion.periodo);
       const periodosUnicos = [...new Set(periodosData)];
       setPeriodos(periodosUnicos);
-    
     } catch (error) {
       console.log("Error: ", error)
     } finally {
