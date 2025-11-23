@@ -1,7 +1,7 @@
 import { useState } from "react";
 import '../Estilos/tabla.css';
 
-function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlApi, cambioCalificaciones, manejarActualizar}) {
+function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlCalificaciones, cambioCalificaciones, manejarActualizar}) {
 
 
     const [filtrosPrincipales, setFiltrosPrincipales] = useState(
@@ -71,7 +71,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
             return ;
         }
         try {
-            const API = `${urlApi}${id}/`;
+            const API = `${urlCalificaciones}${id}/`;
             const respuesta = await fetch(API, {
                 method:'DELETE',
                 headers: {
