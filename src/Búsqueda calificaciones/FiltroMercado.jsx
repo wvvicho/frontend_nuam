@@ -1,5 +1,19 @@
 function FiltroMercado({valorActual, manejarCambio, mercados}) {
 
+    const manejarSelect = (e) => {
+        const id = e.target.value;
+
+        const mercado = mercados.find(item => String(item).id === id);
+
+        const filtro = 
+        {
+            name: 'mercado',
+            id: id,
+            nombre: mercado ? mercado.nombre : ''
+        };
+
+        manejarCambio(filtro);
+    }
 
     return (
         <div id="Mercado" className="d-flex align-items-center col col-lg-3 col-sm-12 col-xs-12">
@@ -8,11 +22,11 @@ function FiltroMercado({valorActual, manejarCambio, mercados}) {
                     id="lista-mercado" 
                     className="form-select ms-2"
                     value={valorActual}
-                    onChange={manejarCambio}
+                    onChange={manejarSelect}
                     >
-                        <option></option>
+                        <option value={''}></option>
                {mercados.map((item, index) => (
-                  <option key={index}>{item.nombre}</option>
+                  <option key={index} value={item.id}>{item.nombre}</option>
                 ))}
             </select>
         </div>

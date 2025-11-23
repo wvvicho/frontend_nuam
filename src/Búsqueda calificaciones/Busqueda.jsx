@@ -7,7 +7,7 @@ import FiltroPendiente from "./FiltroPendiente";
 
 
 //type="button" evita que se envíe el formulario o bien que se recargue la página
-function Botones({onBuscar, onLimpiar}) {
+function BotonesFiltros({onBuscar, onLimpiar}) {
     return (
         <div id="Botones" className="ms-4">
             <button className="btn btn-primary col-10 mb-2" type="button" onClick={onBuscar}>Buscar</button>
@@ -20,12 +20,13 @@ function Busqueda({Cambiando, mercados, origenes, periodos}) {
 
     const [filtros, setFiltros] = useState({
         mercado: '',
+        nombreMercado: '',
         origen: '',
         periodo: '',
         pendiente: false
     });
 
-    const manejarCambio = (e) => {
+    /*const manejarCambio = (e) => {
         const {name, value, type, checked} = e.target;
         const nuevoValor = type === 'checkbox' ? checked : value;
         
@@ -34,6 +35,24 @@ function Busqueda({Cambiando, mercados, origenes, periodos}) {
             [name]: nuevoValor,
         }));
 
+    };*/
+
+    const manejarCambio = (filtro) => {
+        setFiltros(prevFiltros => {
+            const valorFiltro = filtro.id || filtro.value;
+            const nuevosFiltros = {
+                ...prevFiltros,
+                [filtro.name]: valorFiltro  
+            };
+
+            if (filtro.name === 'mercado' && filtro.nombre){
+                nuevosFiltros['nombreMercado'] = filtro.nombre;
+            } else if (filtro.name === 'origen' && filtro.nombre){
+                nuevosFiltros['nombreOrigen'] = filtro.nombre;
+            }
+
+            return nuevosFiltros;
+        })
     };
 
     const manejarBuscar = () => {
@@ -44,7 +63,9 @@ function Busqueda({Cambiando, mercados, origenes, periodos}) {
     const manejarLimpiar = () => {
         const filtrosLimpios = {
             mercado: '',
+            nombreMercado: '',
             origen: '',
+            nombreOrigen: '',
             periodo: '',
             pendiente: false,
         }
@@ -63,7 +84,7 @@ function Busqueda({Cambiando, mercados, origenes, periodos}) {
                     <FiltroPendiente valorActual={filtros.pendiente} manejarCambio={manejarCambio}/>
                 </div>
                 <div className="col col-lg-2 col-sm-12 col-xs-12">
-                    <Botones onBuscar={manejarBuscar} onLimpiar={manejarLimpiar}/>
+                    <BotonesFiltros onBuscar={manejarBuscar} onLimpiar={manejarLimpiar}/>
                 </div>
             </form>
         </div>
