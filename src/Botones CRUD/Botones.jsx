@@ -1,5 +1,5 @@
 import {  Modal, Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import FormularioIngreso from "../Formularios/FormularioIngreso"
 import FormularioFactores from "../Formularios/FormularioFactores";
 
@@ -14,15 +14,14 @@ function Boton ({nombre, manejarAbrir}) {
     </div>
 };
 
-function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, calificacionActualizar, manejarActualizar}) {
+function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalificaciones, calificacionActualizar, manejarActualizar}) {
     const [abrir, setAbrir] = useState(false);
-    const [calificacion, setCalificacion] = useState(null);
+    const [calificacionIngresar, setCalificacionIngresar] = useState(null);
     const [siguiente, setSiguiente] = useState(false);
 
     const manejarAbrir = () => setAbrir(true);
     
     const manejarCerrar = () => {
-        setCalificacion(null);
         setAbrir(false);
         if (calificacionActualizar) {
             manejarActualizar();
@@ -30,7 +29,7 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
     };
 
     const manejarSiguiente = (datos) => {
-        setCalificacion(datos);
+        setCalificacionIngresar(datos);
         setSiguiente(true);
     };
 
@@ -39,8 +38,15 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
     };
 
     const manejarEnvio = (datos) => {
-        setCalificacion(datos);
-        manejarCerrar();
+        const actualizar = datos.id !== undefined && datos.id !== null;
+
+        const dataCalificacion = {...datos};
+        if (!actualizar){
+            delete dataCalificacion.id
+        }
+
+        console.log("Manejando envío")
+        ingresoCalificacion(dataCalificacion, actualizar);
     };
 
     useEffect(() => {
@@ -49,15 +55,52 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
         }
     }, [calificacionActualizar])
 
+    const ingresoCalificacion = async (dataCalificacion, actualizar) => {
+                try {
+                    console.log("Se ejecuta");
+                    const API = urlCalificaciones;
+                    const id = dataCalificacion.id ? dataCalificacion.id : null;
+                    const url = actualizar ? `${API}/${id}` : API;
+                    const metodo = actualizar ? 'PUT' : 'POST';
+
+                    /*const dataCalificacion = {...calificacion};
+                    if (!actualizar) { //Si es POST
+                        delete dataCalificacion.id;
+                    }*/
+
+                    const respuesta = await fetch(url, {
+                        method: metodo,
+                        headers: {
+                            'Content-Type':'application/json',
+                        },
+                        body: JSON.stringify(dataCalificacion),
+                    });
+
+                    const calificacionCreada = await respuesta.json();
+
+                    if (respuesta.ok) {
+                        console.log(`"Calificación ${actualizar ? 'actualizada' : 'ingresada'} con éxito"`);
+                        manejarActualizar();
+                        cambioCalificaciones();
+                        manejarCerrar();
+                    } else {
+                        console.log("Error de ingreso: ", calificacionCreada);
+                    }
+                } catch (error){
+                    console.log("Error al ingresar calificación: ",error);
+                }        
+            };
+
     /*useEffect(() => {
         const API = urlApi;
 
         if (calificacion) {
-            const id = calificacion.id;
-            const actualizar = !!id;
+            const id = calificacion.id ? calificacion.id : null;
+            const actualizar = id;
 
             const ingresoCalificacion = async () => {
                 try {
+                    console.log("Se ejecuta");
                     const url = actualizar ? `${API}/${id}` : API;
                     const metodo = actualizar ? 'PUT' : 'POST';
 
@@ -125,8 +168,8 @@ function Botones ({mercados, origenes, periodos, urlApi, cambioCalificaciones, c
                     <hr />
                     {
                         siguiente ?
-                        <FormularioFactores mercados={mercados} manejarCerrar={manejarCerrar} manejarVolver={manejarVolver} manejarEnvio={manejarEnvio} calificacion={calificacion}/> :
-                        <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} calificacionActualizar={calificacionActualizar || calificacion} manejarSiguiente={manejarSiguiente}/>
+                        <FormularioFactores mercados={mercados} manejarCerrar={manejarCerrar} manejarVolver={manejarVolver} manejarEnvio={manejarEnvio} calificacion={calificacionIngresar}/> :
+                        <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} calificacionActualizar={calificacionActualizar || calificacionIngresar} manejarSiguiente={manejarSiguiente}/>
                     }
                 </Box>
             </Modal>

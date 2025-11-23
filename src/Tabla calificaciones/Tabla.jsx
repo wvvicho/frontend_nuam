@@ -448,35 +448,35 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                             <td>{item.factor_actualizacion}</td>
                             <td>{item.factores[0]}</td>
                             <td>{item.factores[1]}</td>
-                            <td>{item.factor_10}</td>
-                            <td>{item.factor_11}</td>
-                            <td>{item.factor_12}</td>
-                            <td>{item.factor_13}</td>
-                            <td>{item.factor_14}</td>
-                            <td>{item.factor_15}</td>
-                            <td>{item.factor_16}</td>
-                            <td>{item.factor_17}</td>
-                            <td>{item.factor_18}</td>
-                            <td>{item.factor_19}</td>
-                            <td>{item.factor_20}</td>
-                            <td>{item.factor_21}</td>
-                            <td>{item.factor_22}</td>
-                            <td>{item.factor_23}</td>
-                            <td>{item.factor_24}</td>
-                            <td>{item.factor_25}</td>
-                            <td>{item.factor_26}</td>
-                            <td>{item.factor_27}</td>
-                            <td>{item.factor_28}</td>
-                            <td>{item.factor_29}</td>
-                            <td>{item.factor_30}</td>
-                            <td>{item.factor_31}</td>
-                            <td>{item.factor_32}</td>
-                            <td>{item.factor_33}</td>
-                            <td>{item.factor_34}</td>
-                            <td>{item.factor_35}</td>
-                            <td>{item.factor_36}</td>
-                            <td>{item.factor_37}</td>
-                            <td>{item.factor_38}</td>
+                            <td>{item.factores[2]}</td>
+                            <td>{item.factores[3]}</td>
+                            <td>{item.factores[4]}</td>
+                            <td>{item.factores[5]}</td>
+                            <td>{item.factores[6]}</td>
+                            <td>{item.factores[7]}</td>
+                            <td>{item.factores[8]}</td>
+                            <td>{item.factores[9]}</td>
+                            <td>{item.factores[10]}</td>
+                            <td>{item.factores[11]}</td>
+                            <td>{item.factores[12]}</td>
+                            <td>{item.factores[13]}</td>
+                            <td>{item.factores[14]}</td>
+                            <td>{item.factores[15]}</td>
+                            <td>{item.factores[16]}</td>
+                            <td>{item.factores[17]}</td>
+                            <td>{item.factores[18]}</td>
+                            <td>{item.factores[19]}</td>
+                            <td>{item.factores[20]}</td>
+                            <td>{item.factores[21]}</td>
+                            <td>{item.factores[22]}</td>
+                            <td>{item.factores[23]}</td>
+                            <td>{item.factores[24]}</td>
+                            <td>{item.factores[25]}</td>
+                            <td>{item.factores[26]}</td>
+                            <td>{item.factores[27]}</td>
+                            <td>{item.factores[28]}</td>
+                            <td>{item.factores[29]}</td>
+                            <td>{item.factores[30]}</td>
                         </tr>
                     ))}
                 </tbody>
