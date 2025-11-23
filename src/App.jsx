@@ -92,33 +92,7 @@ function App() {
     conseguirMercados();
     conseguirOrigenes();
     conseguirCalificaciones();
-  },[])
-
-  /*useEffect(() => {
-        fetch(URL_API)
-        .then(response => response.json())
-        .then(data => {
-            setData(data);
-            setCargando(false);
-
-
-            const mercadosData = data.map(calificacion => calificacion.mercado);
-            const origenesData = data.map(calificacion => calificacion.origen);
-            const periodosData = data.map(calificacion => calificacion.periodo);
-
-            const mercadosUnicos = [...new Set(mercadosData)];
-            const origenesUnicos = [...new Set(origenesData)];
-            const periodosUnicos = [...new Set(periodosData)];
-
-            setMercados(mercadosUnicos);
-            setOrigenes(origenesUnicos);
-            setPeriodos(periodosUnicos);
-        })
-        .catch(error => {
-            setError(error);
-            setCargando(false);
-        })
-  },[]);*/ 
+  },[]);
     
   if (cargando) return <p>Cargando calificaciones..</p>;
   if (error) return <p>{error}</p>;    

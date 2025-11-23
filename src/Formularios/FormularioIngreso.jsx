@@ -40,8 +40,8 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
 
     useEffect(() => {
         if (calificacionActualizar != null){
-            setMercado(calificacionActualizar.mercado?.id || '');
-            setOrigen(calificacionActualizar.origen?.id || '');
+            setMercado(calificacionActualizar?.mercado || '');
+            setOrigen(calificacionActualizar?.origen || '');
             setPeriodo(calificacionActualizar.periodo || '');
             setEjercicio(calificacionActualizar.ejercicio || '');
             setInstrumento(calificacionActualizar.instrumento || '');
@@ -91,7 +91,8 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
                     valor_historico, 
                     fechaActualizacion, 
                     anio, 
-                    isfut
+                    isfut,
+                    factores: calificacionActualizar ? calificacionActualizar.factores : undefined
                 };
                 console.log(datos);
                 manejarSiguiente(datos);

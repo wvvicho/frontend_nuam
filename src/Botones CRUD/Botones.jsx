@@ -60,13 +60,9 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
                     console.log("Se ejecuta");
                     const API = urlCalificaciones;
                     const id = dataCalificacion.id ? dataCalificacion.id : null;
-                    const url = actualizar ? `${API}/${id}` : API;
+                    const url = actualizar ? `${API}${id}/` : API;
                     const metodo = actualizar ? 'PUT' : 'POST';
 
-                    /*const dataCalificacion = {...calificacion};
-                    if (!actualizar) { //Si es POST
-                        delete dataCalificacion.id;
-                    }*/
 
                     const respuesta = await fetch(url, {
                         method: metodo,
