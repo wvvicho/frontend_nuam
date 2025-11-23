@@ -121,13 +121,8 @@ function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, califi
                         ))}
                     </select>
 
-                    <label htmlFor="periodos" className="form-label">Periodo</label>
-                    <select name="periodos" id="periodos" className="form-select mb-3 border-black" value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
-                        <option></option>
-                        {periodos.map( (periodo, index) => (
-                            <option key={index} value={periodo}>{periodo}</option>
-                        ))}
-                    </select>
+                    <label htmlFor="periodo" className="form-label">Periodo</label>
+                    <input type="number" name="periodo" id="periodo" className="form-control mb-3 border-black" value={periodo} onChange={(e) => setPeriodo(e.target.value)}/>
 
                     <label htmlFor="ejercicio" className="form-label">Ejercicio</label>
                     <input type="number" name="ejercicio" id="ejercicio" className="form-control mb-3 border-black" value={ejercicio} onChange={(e) => setEjercicio(e.target.value)}/>
