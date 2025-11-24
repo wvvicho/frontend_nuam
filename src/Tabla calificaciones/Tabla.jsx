@@ -1,7 +1,7 @@
 import { useState } from "react";
 import '../Estilos/tabla.css';
 
-function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlCalificaciones, cambioCalificaciones, manejarActualizar}) {
+function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusqueda, calificaciones, urlCalificaciones, cambioCalificaciones, manejarActualizar, paginaActual, totalPaginas, manejarCambioPagina}) {
 
 
     const [filtrosPrincipales, setFiltrosPrincipales] = useState(
@@ -100,102 +100,109 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
     };
 
     return (
-        <div className="mt-3 table-responsive mb-4">
-            <table className="table table-bordered table-fixed-header">
-                <thead>
-                    <tr className="table-row text-nowrap">
-                        <th scope="col">Acciones</th>
-                        <th scope="col">Ejercicio</th>
-                        <th scope="col">Instrumento</th>
-                        <th scope="col">Fecha Pago</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Secuencia Evento</th>
-                        <th scope="col">Factor de Actualización</th>
+        <div>
+            <div className="mt-3 table-responsive mb-4">
+                <table className="table table-bordered table-fixed-header">
+                    <thead>
+                        <tr className="table-row text-nowrap">
+                            <th scope="col">Acciones</th>
+                            <th scope="col">Ejercicio</th>
+                            <th scope="col">Instrumento</th>
+                            <th scope="col">Fecha Pago</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Secuencia Evento</th>
+                            <th scope="col">Factor de Actualización</th>
 
-                        {factoresFiltros.map((_, index) => (
-                            <th scope="col" key={index}>Factor-{String(index + 8).padStart(2, '0')}</th>
-                        ))}
-                    </tr>
-                    <tr className="filtros">
-                        <td>
-                            <h2>Filtros</h2>
-                        </td>
-                        <td>
-                            <input type="number" 
-                                    id="ejercicio" 
-                                    value={ejercicio}
-                                    onChange={manejarFiltroPrincipal}
-                                    />
-                        </td>
-                        <td>
-                            <input type="text" 
-                                    id="instrumento" 
-                                    value={instrumento}
-                                    onChange={manejarFiltroPrincipal}
-                                    />
-                        </td>
-                        <td>
-                            <input type="text" 
-                                    id="fecha_pago" 
-                                    value={fecha_pago}
-                                    onChange={manejarFiltroPrincipal}
-                                    />
-                        </td>
-                        <td>
-                            <input type="text" 
-                                    id="descripcion" 
-                                    value={descripcion}
-                                    onChange={manejarFiltroPrincipal}
-                                    />
-                        </td>
-                        <td>
-                            <input type="number" 
-                                    id="secuencia_evento" 
-                                    value={secuencia_evento}
-                                    onChange={manejarFiltroPrincipal}
-                                    />
-                        </td>
-                        <td>
-                            <input type="number" 
-                                    id="factor_actualizacion" 
-                                    value={factor_actualizacion}
-                                    onChange={manejarFiltroPrincipal}
-                                    />      
-                        </td>
-
-                        {factoresFiltros.map((factor, index) => (
-                            <td key={index}>
-                                <input 
-                                    type="number" 
-                                    value={factor} 
-                                    onChange={manejarFiltroFactores} 
-                                    />
-                            </td>
-                        ))}
-
-                    </tr>
-                </thead>
-                <tbody>
-                    {CalificacionesFiltrada.map((item, index) => (
-                        <tr key={index}>
-                            <td className="d-flex gap-3">
-                                <button className="btn btn-warning w-50" onClick={() => actualizarCalificacion(item)}>Actualizar</button> 
-                                <button className="btn btn-danger w-50" onClick={() => eliminarCalificacion(item.id)}>Eliminar</button>
-                            </td>
-                            <td>{item.ejercicio}</td>
-                            <td>{item.instrumento}</td>
-                            <td>{item.fecha_pago}</td>
-                            <td className="text-nowrap">{item.descripcion}</td>
-                            <td>{item.secuencia_evento}</td>
-                            <td>{item.factor_actualizacion}</td>
-
-                            {item.factores.map((factor_valor, factor_index) => (
-                                <td key={factor_index}>{factor_valor}</td>
+                            {factoresFiltros.map((_, index) => (
+                                <th scope="col" key={index}>Factor-{String(index + 8).padStart(2, '0')}</th>
                             ))}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                        <tr className="filtros">
+                            <td>
+                                <h2>Filtros</h2>
+                            </td>
+                            <td>
+                                <input type="number" 
+                                        id="ejercicio" 
+                                        value={ejercicio}
+                                        onChange={manejarFiltroPrincipal}
+                                        />
+                            </td>
+                            <td>
+                                <input type="text" 
+                                        id="instrumento" 
+                                        value={instrumento}
+                                        onChange={manejarFiltroPrincipal}
+                                        />
+                            </td>
+                            <td>
+                                <input type="text" 
+                                        id="fecha_pago" 
+                                        value={fecha_pago}
+                                        onChange={manejarFiltroPrincipal}
+                                        />
+                            </td>
+                            <td>
+                                <input type="text" 
+                                        id="descripcion" 
+                                        value={descripcion}
+                                        onChange={manejarFiltroPrincipal}
+                                        />
+                            </td>
+                            <td>
+                                <input type="number" 
+                                        id="secuencia_evento" 
+                                        value={secuencia_evento}
+                                        onChange={manejarFiltroPrincipal}
+                                        />
+                            </td>
+                            <td>
+                                <input type="number" 
+                                        id="factor_actualizacion" 
+                                        value={factor_actualizacion}
+                                        onChange={manejarFiltroPrincipal}
+                                        />      
+                            </td>
+
+                            {factoresFiltros.map((factor, index) => (
+                                <td key={index}>
+                                    <input 
+                                        type="number" 
+                                        value={factor} 
+                                        onChange={manejarFiltroFactores} 
+                                        />
+                                </td>
+                            ))}
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {CalificacionesFiltrada.map((item, index) => (
+                            <tr key={index}>
+                                <td className="d-flex gap-3">
+                                    <button className="btn btn-warning w-50" onClick={() => actualizarCalificacion(item)}>Actualizar</button> 
+                                    <button className="btn btn-danger w-50" onClick={() => eliminarCalificacion(item.id)}>Eliminar</button>
+                                </td>
+                                <td>{item.ejercicio}</td>
+                                <td>{item.instrumento}</td>
+                                <td>{item.fecha_pago}</td>
+                                <td className="text-nowrap">{item.descripcion}</td>
+                                <td>{item.secuencia_evento}</td>
+                                <td>{item.factor_actualizacion}</td>
+
+                                {item.factores.map((factor_valor, factor_index) => (
+                                    <td key={factor_index}>{factor_valor}</td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="d-flex align-items-center justify-content-between mb-3">
+                    <button onClick={() => manejarCambioPagina(paginaActual - 1)} disabled={paginaActual === 1} className="btn btn-secondary">Anterior</button>
+                    <span>Página {paginaActual} de {totalPaginas}</span>
+                    <button onClick={() => manejarCambioPagina(paginaActual + 1)} disabled={paginaActual === totalPaginas} className="btn btn-secondary">Siguiente</button>
+            </div>
         </div>
     );
 };
