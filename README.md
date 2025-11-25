@@ -69,6 +69,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-### `npm install @mui/material @emotion/react @emotion/styled`
-### `npm install -g json-server`
-### `json-server --watch data/calificaciones.json`
+### `npm install @mui/material @emotion/react @emotion/styled` implementación de Modals
+### `npm install papaparse` para lectura de archivos csv
