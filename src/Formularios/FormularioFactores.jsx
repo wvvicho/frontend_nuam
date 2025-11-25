@@ -66,42 +66,49 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
 
     const [factores, setFactores] = useState(() => inicializarFactores(calificacion.factores));
 
+
     const manejarCambioFactor = useCallback((key, value) => {
-        
+    
+        const valorEstandarizado = value.replace(/,/g, '.');
+
+        let valorFinal;
+
         if (ingreso_por_montos) {
-            setFactores(prevFactores => ({
-                ...prevFactores,
-                [key] : value
-            }));
+            
+            const regexMontos = /[^0-9]/g; 
+            valorFinal = valorEstandarizado.replace(regexMontos, '');
+            
         } else {
-            const value1 = value.replace(/[^0-9.]/g, '');
-        
-            const value2 = value1.replace(/(\..*)\./g, '$1');
+            
+            const valorPaso1 = valorEstandarizado.replace(/[^0-9.]/g, ''); 
 
-            const dividir = value2.split('.');
+            const valorPaso2 = valorPaso1.replace(/(\..*)\./g, '$1'); 
 
-            let enteros = dividir[0] || '';
-            let decimales = dividir[1] || '';
+            const partes = valorPaso2.split('.');
+            let enteros = partes[0] || '';
+            let decimales = partes[1] || '';
 
             if (enteros.length > 1) {
                 enteros = enteros.slice(0, 1);
             }
-
+            
             if (decimales.length > 9) {
                 decimales = decimales.slice(0, 9);
             }
             
-            let valueFinal = enteros;
-
-            if (value2.includes('.') || decimales.length > 0) {
-                valueFinal += '.' + decimales
+            let valorReconstruido = enteros;
+            if (valorPaso2.includes('.') || decimales.length > 0) {
+                valorReconstruido += '.' + decimales;
             }
 
-            setFactores(prevFactores => ({
-                ...prevFactores,
-                [key] : valueFinal
-            }));
+            valorFinal = valorReconstruido;
         }
+
+        setFactores(prevFactores => ({
+            ...prevFactores,
+            [key] : valorFinal
+        }));
+    
     }, [ingreso_por_montos]);
 
     const manejarCheck = (e) => {
@@ -144,10 +151,33 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
 
         const camposFormIngreso = [mercado, instrumento, valor_historico, fecha_pago, secuencia_evento, anio];
         const camposValidos = camposFormIngreso.every(campo => String(campo) != '');
-
+        console.log("Campos validos: ",camposValidos);
         const fecha_valida = fecha_pago < calificacion.fechaActualizacion;
+        console.log("Fecha valida: ",fecha_valida);
+        const factoresValidos = Object.values(factores).every(factor => {
+            const factorString = String(factor);
+            
+            if (factorString.trim() === '') {
+                return false; // Debe tener un valor
+            }
 
-        const factoresValidos = Object.values(factores).every(factor => String(factor) != '' && factor.length > 0 && factor.length < 9 && factor > 0 && factor <= 1);
+            const valorEstandarizado = factorString.replace(/,/g, '.');
+            const valorNumerico = parseFloat(valorEstandarizado);
+
+            if (isNaN(valorNumerico) || valorNumerico <= 0 || valorNumerico > 1) {
+                return false;
+            }
+
+            const partes = valorEstandarizado.split('.');
+            const decimales = partes[1] || '';
+
+            if (decimales.length > 8) {
+                return false;
+            }
+            
+            return true;
+        });
+        console.log("Factores validos: ",factoresValidos);
 
         if (!camposValidos || !factoresValidos || !fecha_valida){
             setErrorIngreso('Por favor rellene todos los campos antes de ingresar, los factores deben tener como máximo 1 entero y 8 decimales, los factores deben tener un valor de entre 0 y 1, la fecha de pago no debe ser mayor a la fecha de actualización');
