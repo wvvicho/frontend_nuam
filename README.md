@@ -6,6 +6,7 @@ Calificaciones tributarias de NUAM. Integrado en conjunto con Backend hecho con 
 ## Para instalar las dependencias necesarias para el desarrollo
 El siguiente comando instalará las dependencias necesarias que requiere el código para un entorno de desarrollo. Este comando instalará
 las dependencias que vienen desde el [package.json](https://github.com/wvvicho/frontend_nuam/blob/main/package.json).
+
 `npm install`
 
 ## Scripts disponibles
