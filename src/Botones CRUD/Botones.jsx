@@ -1,34 +1,37 @@
 import {  Modal, Box } from "@mui/material";
-import { act, useEffect, useState } from "react";
-import FormularioIngreso from "../Formularios/FormularioIngreso"
+import { useEffect, useState } from "react";
+import FormularioIngreso from "../Formularios/FormularioIngreso";
 import FormularioFactores from "../Formularios/FormularioFactores";
-
-function Boton ({nombre, manejarAbrir}) {
-    return <div>
-        {nombre == "INGRESAR" 
-         ?
-         <button className="btn btn-primary on" onClick={manejarAbrir}>{nombre}</button>
-         :
-         <button className="btn bg-white border border-primary text-primary text-nowrap">{nombre}</button>
-         }
-    </div>
-};
+import TablaCargaArchivo from "../Tabla calificaciones/TablaCargaArchivo";
 
 function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalificaciones, calificacionActualizar, manejarActualizar}) {
-    const [abrir, setAbrir] = useState(false);
+    
+    //Acciones Modal de ingreso
+    const [abrirIngreso, setAbrirIngreso] = useState(false);
     const [calificacionIngresar, setCalificacionIngresar] = useState(null);
     const [siguiente, setSiguiente] = useState(false);
 
-    const manejarAbrir = () => setAbrir(true);
+    const manejarAbrirIngreso = () => setAbrirIngreso(true);
     
-    const manejarCerrar = () => {
-        setAbrir(false);
+    const manejarCerrarIngreso = () => {
+        setAbrirIngreso(false);
         setSiguiente(false);
         setCalificacionIngresar(null);
         
         if (calificacionActualizar) {
             manejarActualizar();
         }
+    };
+
+    //Acciones Modal de Carga por Factor
+    const [abrirCargaFactor, setAbrirCargaFactor] = useState(false);
+    
+    const manejarAbrirCargaFactor = () => {
+        setAbrirCargaFactor(true);
+    };
+
+    const manejarCerrarCargaFactor = () => {
+        setAbrirCargaFactor(false);
     };
 
     const manejarSiguiente = (datos) => {
@@ -54,7 +57,7 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
 
     useEffect(() => {
         if (calificacionActualizar != null){
-            manejarAbrir();
+            manejarAbrirIngreso();
         }
     }, [calificacionActualizar])
 
@@ -81,7 +84,7 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
                         console.log(`"Calificación ${actualizar ? 'actualizada' : 'ingresada'} con éxito"`);
                         manejarActualizar();
                         cambioCalificaciones();
-                        manejarCerrar();
+                        manejarCerrarIngreso();
                     } else {
                         console.log("Error de ingreso: ", calificacionCreada);
                     }
@@ -111,26 +114,39 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
 
     return (
         <div className="d-flex gap-1">
-            <Boton nombre={"INGRESAR"} manejarAbrir={manejarAbrir}/>
-            <Modal
-            open={abrir}
-            onClose={manejarCerrar}
-            className="Modal"
-            aria-labelledby="modal-titulo"
-            aria-describedby="modal-cuerpo"
-            >
-                <Box sx={estiloModal}>
-                    <h2 id="modal-titulo" className="text-primary">Ingresar calificación</h2>
-                    <hr />
-                    {
-                        siguiente ?
-                        <FormularioFactores mercados={mercados} manejarCerrar={manejarCerrar} manejarVolver={manejarVolver} manejarEnvio={manejarEnvio} calificacion={calificacionIngresar}/> :
-                        <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrar} calificacionActualizar={calificacionActualizar || calificacionIngresar} manejarSiguiente={manejarSiguiente}/>
-                    }
-                </Box>
-            </Modal>
-            <Boton nombre={"CARGA POR MONTO"}/>
-            <Boton nombre={"CARGA POR FACTOR"}/>
+            <button onClick={manejarAbrirIngreso} className="btn btn-primary">INGRESAR</button>
+                <Modal
+                open={abrirIngreso}
+                onClose={manejarCerrarIngreso}
+                className="Modal"
+                aria-labelledby="modal-titulo"
+                aria-describedby="modal-cuerpo"
+                >
+                    <Box sx={estiloModal}>
+                        <h2 id="modal-titulo" className="text-primary">Ingresar calificación</h2>
+                        <hr />
+                        {
+                            siguiente ?
+                            <FormularioFactores mercados={mercados} manejarCerrar={manejarCerrarIngreso} manejarVolver={manejarVolver} manejarEnvio={manejarEnvio} calificacion={calificacionIngresar}/> :
+                            <FormularioIngreso mercados={mercados} origenes={origenes} periodos={periodos} manejarCerrar={manejarCerrarIngreso} calificacionActualizar={calificacionActualizar || calificacionIngresar} manejarSiguiente={manejarSiguiente}/>
+                        }
+                    </Box>
+                </Modal>
+            <button className="btn bg-white border border-primary text-primary text-nowrap">CARGA POR MONTO</button>
+            <button className="btn bg-white border border-primary text-primary text-nowrap" onClick={manejarAbrirCargaFactor}>CARGA POR FACTOR</button>
+                <Modal
+                open={abrirCargaFactor}
+                onClose={manejarCerrarCargaFactor}
+                className="Modal"
+                aria-labelledby="modal-titulo-f"
+                aria-describedby="modal-cuerpo"
+                >
+                    <Box sx={estiloModal}>
+                        <h2 id="modal-titulo-f" className="text-primary">Carga Archivo Por Factor</h2>
+                        <hr />
+                        <TablaCargaArchivo manejarCerrar={manejarCerrarCargaFactor} urlCalificaciones={urlCalificaciones}/>
+                    </Box>        
+                </Modal>
         </div>
     )
 };

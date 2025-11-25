@@ -51,7 +51,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
             String(calificacion.ejercicio).includes(ejercicio.toLowerCase()) &&
             calificacion.instrumento.toLowerCase().includes(instrumento.toLowerCase()) &&
             calificacion.fecha_pago.toLowerCase().includes(fecha_pago.toLowerCase()) &&
-            calificacion.descripcion.toLowerCase().includes(descripcion.toLowerCase()) &&
+            String(calificacion.descripcion).toLowerCase().includes(descripcion.toLowerCase()) &&
             String(calificacion.secuencia_evento).includes(secuencia_evento.toLowerCase()) &&
             String(calificacion.factor_actualizacion).includes(factor_actualizacion.toLowerCase()) 
         );
