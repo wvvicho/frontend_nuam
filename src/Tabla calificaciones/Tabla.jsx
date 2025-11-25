@@ -119,7 +119,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                         </tr>
                         <tr className="filtros">
                             <td>
-                                <h2>Filtros</h2>
+                                <h6>Filtros</h6>
                             </td>
                             <td>
                                 <input type="number" 
