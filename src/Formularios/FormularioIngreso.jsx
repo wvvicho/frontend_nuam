@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function FormularioIngreso ({mercados, origenes, periodos, manejarCerrar, calificacionActualizar, manejarSiguiente}) {
+function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActualizar, manejarSiguiente}) {
     
 
 

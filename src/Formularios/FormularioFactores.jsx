@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnvio, calificacion}) {
+function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnvio, calificacion, manejarMontos, factoresCalculados}) {
     
     const factores_llaves = [
         'factor_08', 'factor_09', 'factor_10', 'factor_11', 'factor_12',
@@ -73,15 +73,39 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
         }));
     }, []);
 
+    const manejarCheck = (e) => {
+        setIngresoPorMontos(e.target.checked); 
+    };
+
 
     const [errorIngreso, setErrorIngreso] = useState(false);
 
+
+    const manejarCalcular = () => {
+        setErrorIngreso(null);
+        const factoresValidos = Object.values(factores).every(factor => String(factor) != '' && factor > 0);
+
+        if (factoresValidos){
+            const montosEnviar = factores_llaves.map(key => parseInt(factores[key]));
+            manejarMontos(montosEnviar);
+        } else {
+            setErrorIngreso("Por favor ingrese todos los montos (deben ser mayor a 0)")
+        }
+        
+    };
+
+    useEffect(() => {
+        if (factoresCalculados && Object.keys(factoresCalculados).length > 0){
+            setFactores(factoresCalculados);
+            setIngresoPorMontos(false);
+        }
+    }, [factoresCalculados])
 
     const manejarSubmit = (e) => {
         e.preventDefault();
         setErrorIngreso('');
 
-        const camposFormIngreso = [mercado, instrumento, valor_historico, fecha_pago, descripcion, secuencia_evento, anio];
+        const camposFormIngreso = [mercado, instrumento, valor_historico, fecha_pago, secuencia_evento, anio];
         const camposValidos = camposFormIngreso.every(campo => String(campo) != '');
 
         const factoresValidos = Object.values(factores).every(factor => String(factor) != '');
@@ -172,7 +196,7 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                         {/*Ingreso por montos*/}
                         <div className="d-flex align-items-center justify-content-start w-100">
                             <label htmlFor="ingreso_por_montos" className="form-check-label text-nowrap me-2">Ingreso por Montos</label>
-                            <input type="checkbox" name="ingreso_por_montos" id="ingreso_por_montos" className="form-check-input border-black" value={ingreso_por_montos} onChange={(e) => setIngresoPorMontos(e.target.value)}/>
+                            <input type="checkbox" name="ingreso_por_montos" id="ingreso_por_montos" className="form-check-input border-black" checked={ingreso_por_montos} onChange={(e) => manejarCheck(e)}/>
                         </div>
                     </div>
                     
@@ -212,13 +236,18 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                 <div className="d-flex flex-row gap-2 justify-content-end mt-3">
                     {errorIngreso 
                     ? 
-                        <p>{errorIngreso}</p>    
+                        <p className="text-danger">{errorIngreso}</p>    
                     :
                         <span></span>
                     }
                     <button className="btn btn-secondary" onClick={manejarVolver}>Volver</button>
                     <button className="btn btn-danger" onClick={() => {manejarCerrar(); manejarVolver();}}>Cancelar</button>
-                    <button className="btn btn-success" type="submit">Enviar</button>
+                    {ingreso_por_montos
+                        ?
+                        <button className="btn btn-secondary" type="button" onClick={manejarCalcular}>Calcular</button>
+                       :
+                        <button className="btn btn-success" type="submit">Enviar</button>
+                    }
                 </div>
             </form>
         </div>
