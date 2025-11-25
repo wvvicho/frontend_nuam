@@ -67,34 +67,42 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
     const [factores, setFactores] = useState(() => inicializarFactores(calificacion.factores));
 
     const manejarCambioFactor = useCallback((key, value) => {
-        const value1 = value.replace(/[^0-9.]/g, '');
         
-        const value2 = value1.replace(/(\..*)\./g, '$1');
-
-        const dividir = value2.split('.');
-
-        let enteros = dividir[0] || '';
-        let decimales = dividir[1] || '';
-
-        if (enteros.length > 1) {
-            enteros = enteros.slice(0, 1);
-        }
-
-        if (decimales.length > 9) {
-            decimales = decimales.slice(0, 9);
-        }
+        if (ingreso_por_montos) {
+            setFactores(prevFactores => ({
+                ...prevFactores,
+                [key] : value
+            }));
+        } else {
+            const value1 = value.replace(/[^0-9.]/g, '');
         
-        let valueFinal = enteros;
+            const value2 = value1.replace(/(\..*)\./g, '$1');
 
-        if (value2.includes('.') || decimales.length > 0) {
-            valueFinal += '.' + decimales
+            const dividir = value2.split('.');
+
+            let enteros = dividir[0] || '';
+            let decimales = dividir[1] || '';
+
+            if (enteros.length > 1) {
+                enteros = enteros.slice(0, 1);
+            }
+
+            if (decimales.length > 9) {
+                decimales = decimales.slice(0, 9);
+            }
+            
+            let valueFinal = enteros;
+
+            if (value2.includes('.') || decimales.length > 0) {
+                valueFinal += '.' + decimales
+            }
+
+            setFactores(prevFactores => ({
+                ...prevFactores,
+                [key] : valueFinal
+            }));
         }
-
-        setFactores(prevFactores => ({
-            ...prevFactores,
-            [key] : valueFinal
-        }));
-    }, []);
+    }, [ingreso_por_montos]);
 
     const manejarCheck = (e) => {
         setIngresoPorMontos(e.target.checked); 
