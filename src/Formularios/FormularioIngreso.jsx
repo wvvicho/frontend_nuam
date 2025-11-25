@@ -38,6 +38,12 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
         setISFUT(false);
     };
 
+    const manejarInt = (e) => {
+        if (e.key === '.' || e.key === ','){
+            e.preventDefault();
+        }
+    };
+
     useEffect(() => {
         if (calificacionActualizar != null){
             setMercado(calificacionActualizar?.mercado || '');
@@ -64,15 +70,15 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
             mercado != '' && 
             origen != '' && 
             periodo != '' && 
-            ejercicio != '' && 
-            instrumento != '' && 
+            ejercicio != '' && ejercicio >= 1950 &&
+            instrumento != '' && instrumento.length == 3 &&
             fecha_pago != '' &&
             secuencia_evento != '' &&
-            factor_actualizacion != '' &&
+            factor_actualizacion != '' && fechaActualizacion >= fecha_pago &&
             dividendo != '' &&
             valor_historico != '' &&
             fechaActualizacion != '' &&
-            anio != '') {
+            anio != '' && anio >= 1950 && anio <= 2025 /*Hay que actualizar esto a fecha actual*/) {
                 const Mercado = mercados.find(m => m.id === parseInt(mercado, 10));
                 const Origen = origenes.find(o => o.id === parseInt(origen, 10));
                 const datos = 
@@ -97,7 +103,7 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
                 console.log(datos);
                 manejarSiguiente(datos);
         }else{
-            setErrorIngreso("Por favor rellene todos los campos necesarios.")
+            setErrorIngreso("Por favor rellene todos los campos necesarios, el ejercicio debe ser mayor a 1950, el instrumento debe tener exactamente 3 caracteres, la fecha de actualización no debe ser menor a la fecha de pago, el año debe ser mayor a 1950")
         }
     } 
     
@@ -122,10 +128,10 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
                     </select>
 
                     <label htmlFor="periodo" className="form-label">Periodo</label>
-                    <input type="number" name="periodo" id="periodo" className="form-control mb-3 border-black" value={periodo} onChange={(e) => setPeriodo(e.target.value)}/>
+                    <input type="number" step={1} onKeyDown={manejarInt} name="periodo" id="periodo" className="form-control mb-3 border-black" value={periodo} onChange={(e) => setPeriodo(e.target.value)}/>
 
                     <label htmlFor="ejercicio" className="form-label">Ejercicio</label>
-                    <input type="number" name="ejercicio" id="ejercicio" className="form-control mb-3 border-black" value={ejercicio} onChange={(e) => setEjercicio(e.target.value)}/>
+                    <input type="number" step={1} onKeyDown={manejarInt} name="ejercicio" id="ejercicio" className="form-control mb-3 border-black" value={ejercicio} onChange={(e) => setEjercicio(e.target.value)}/>
 
                     <label htmlFor="instrumento" className="form-label">Instrumento</label>
                     <input type="text" name="instrumento" id="instrumento" className="form-control mb-3 border-black" value={instrumento} onChange={(e) => setInstrumento(e.target.value)}/>
@@ -137,10 +143,10 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
                     <input type="date" name="fecha_pago" id="fecha_pago" className="form-control mb-3 border-black" value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)}/>
 
                     <label htmlFor="secuencia" className="form-label">Secuencia Evento</label>
-                    <input type="number" name="secuencia" id="secuencia" className="form-control mb-3 border-black"  value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
+                    <input type="number" step={1} onKeyDown={manejarInt} name="secuencia" id="secuencia" className="form-control mb-3 border-black"  value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
 
                     <label htmlFor="dividendo" className="form-label">Dividendo</label>
-                    <input type="number" name="dividendo" id="dividendo" className="form-control mb-3 border-black" value={dividendo} onChange={(e) => setDividendo(e.target.value)}/>
+                    <input type="number" step={1} onKeyDown={manejarInt} name="dividendo" id="dividendo" className="form-control mb-3 border-black" value={dividendo} onChange={(e) => setDividendo(e.target.value)}/>
 
                     <label htmlFor="valor">Valor histórico</label>
                     <input type="number" name="valor" id="valor" className="form-control mb-3 border-black" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)}/>
@@ -149,13 +155,13 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
                 <div className="col-lg-6 d-flex flex-column align-items-start">
 
                     <label htmlFor="factor_actualizacion" className="form-label">Factor actualización</label>
-                    <input type="number" name="factor_actualizacion" id="factor_actualizacion" className="form-control mb-3 border-black" value={factor_actualizacion} onChange={(e) => setFactorActualizacion(e.target.value)}/>   
+                    <input type="number" step={1} onKeyDown={manejarInt} name="factor_actualizacion" id="factor_actualizacion" className="form-control mb-3 border-black" value={factor_actualizacion} onChange={(e) => setFactorActualizacion(e.target.value)}/>   
 
                     <label htmlFor="fecha_actualizacion" className="form-label">Fecha de actualización</label>
                     <input type="date" name="fecha_actualizacion" id="fecha_actualizacion" className="form-control mb-3 border-black" value={fechaActualizacion} onChange={(e) => setFechaActualizacion(e.target.value)}/>
 
                     <label htmlFor="anio" className="form-label">Año</label>
-                    <input type="number" name="anio" id="anio" className="form-control mb-3 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/> 
+                    <input type="number" step={1} onKeyDown={manejarInt} name="anio" id="anio" className="form-control mb-3 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/> 
 
                     <label htmlFor="isfut" className="form-label">ISFUT</label>
                     <input type="checkbox" name="isfut" id="isfut" className="form-check-input border-black" value={isfut} onChange={(e) => setISFUT(e.target.checked)} checked={isfut}/> 

@@ -67,9 +67,32 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
     const [factores, setFactores] = useState(() => inicializarFactores(calificacion.factores));
 
     const manejarCambioFactor = useCallback((key, value) => {
+        const value1 = value.replace(/[^0-9.]/g, '');
+        
+        const value2 = value1.replace(/(\..*)\./g, '$1');
+
+        const dividir = value2.split('.');
+
+        let enteros = dividir[0] || '';
+        let decimales = dividir[1] || '';
+
+        if (enteros.length > 1) {
+            enteros = enteros.slice(0, 1);
+        }
+
+        if (decimales.length > 9) {
+            decimales = decimales.slice(0, 9);
+        }
+        
+        let valueFinal = enteros;
+
+        if (value2.includes('.') || decimales.length > 0) {
+            valueFinal += '.' + decimales
+        }
+
         setFactores(prevFactores => ({
             ...prevFactores,
-            [key] : value
+            [key] : valueFinal
         }));
     }, []);
 
@@ -101,6 +124,12 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
         }
     }, [factoresCalculados])
 
+    const manejarInt = (e) => {
+        if (e.key === '.' || e.key === ','){
+            e.preventDefault();
+        }
+    };
+
     const manejarSubmit = (e) => {
         e.preventDefault();
         setErrorIngreso('');
@@ -108,10 +137,12 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
         const camposFormIngreso = [mercado, instrumento, valor_historico, fecha_pago, secuencia_evento, anio];
         const camposValidos = camposFormIngreso.every(campo => String(campo) != '');
 
-        const factoresValidos = Object.values(factores).every(factor => String(factor) != '');
+        const fecha_valida = fecha_pago < calificacion.fechaActualizacion;
 
-        if (!camposValidos || !factoresValidos){
-            setErrorIngreso('Por favor rellene todos los campos antes de ingresar');
+        const factoresValidos = Object.values(factores).every(factor => String(factor) != '' && factor.length > 0 && factor.length < 9 && factor > 0 && factor <= 1);
+
+        if (!camposValidos || !factoresValidos || !fecha_valida){
+            setErrorIngreso('Por favor rellene todos los campos antes de ingresar, los factores deben tener como máximo 1 entero y 8 decimales, los factores deben tener un valor de entre 0 y 1, la fecha de pago no debe ser mayor a la fecha de actualización');
             return;
         }
 
@@ -178,7 +209,7 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                         {/*Año*/}
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="anio" className="form-label text-nowrap me-2">Año</label>
-                            <input type="number" name="anio" id="anio" className="form-control w-50 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/>
+                            <input type="number" step={1} onKeyDown={manejarInt} name="anio" id="anio" className="form-control w-50 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/>
                         </div> 
                     </div>
 
@@ -209,7 +240,7 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                         {/*Secuencia evento*/}
                         <div className="d-flex align-items-center justify-content-between">
                             <label htmlFor="secuencia_evento" className="form-label text-nowrap me-2">Secuencia Evento</label>
-                            <input type="number" name="secuencia_evento" id="secuencia_evento" className="form-control w-50 border-black" value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
+                            <input type="number" step={1} onKeyDown={manejarInt} name="secuencia_evento" id="secuencia_evento" className="form-control w-50 border-black" value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
                         </div>
                     </div>
                 </div>

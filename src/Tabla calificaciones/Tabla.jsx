@@ -14,7 +14,7 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
             factor_actualizacion: '',
         }
     );
-    const factores = Array(31).fill('');
+    const factores = Array(30).fill('');
     const [factoresFiltros, setFactoresFiltros] = useState(factores);
 
     const { ejercicio, instrumento, fecha_pago, descripcion, secuencia_evento, factor_actualizacion} = filtrosPrincipales;
