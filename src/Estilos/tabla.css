@@ -13,3 +13,28 @@
     top: 0;
 }
 
+.btn-soft-warning,
+.btn-soft-danger {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-soft-warning {
+    background: #fffdee;
+    color: #ebe270;
+}
+.btn-soft-warning:hover {
+    background: #f7e8b8;
+}
+
+.btn-soft-danger {
+    background: #fffdee;
+    color: #f87c7c;
+}
+.btn-soft-danger:hover {
+    background: #ffc4c4;
+}
+

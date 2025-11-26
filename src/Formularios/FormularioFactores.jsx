@@ -46,146 +46,157 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
         };
 
 
-    const [mercado, setMercado] = useState(calificacion.mercado ? calificacion.mercado.id : '');
-    const [instrumento, setInstrumento] = useState(calificacion.instrumento);
-    const [valor_historico, setValorHistorico] = useState(calificacion.valor_historico)
-    const [fecha_pago, setFechaPago] = useState(calificacion.fecha_pago);
-    const [descripcion, setDescripcion] = useState(calificacion.descripcion);
-    const [secuencia_evento, setSecuenciaEvento] = useState(calificacion.secuencia_evento);
-    const [anio, setAnio] = useState(calificacion.anio);
-
-    const [ingreso_por_montos, setIngresoPorMontos] = useState(false);
-
-    const inicializarFactores = (factores = []) => {
-        const factoresIniciales = {};
-        factores_llaves.forEach((key, index) => {
-            factoresIniciales[key] = factores[index] ?? '';
-        });
-        return factoresIniciales; 
-    };
-
-    const [factores, setFactores] = useState(() => inicializarFactores(calificacion.factores));
-
-
-    const manejarCambioFactor = useCallback((key, value) => {
-    
-        const valorEstandarizado = value.replace(/,/g, '.');
-
-        let valorFinal;
-
-        if (ingreso_por_montos) {
-            
-            const regexMontos = /[^0-9]/g; 
-            valorFinal = valorEstandarizado.replace(regexMontos, '');
-            
-        } else {
-            
-            const valorPaso1 = valorEstandarizado.replace(/[^0-9.]/g, ''); 
-
-            const valorPaso2 = valorPaso1.replace(/(\..*)\./g, '$1'); 
-
-            const partes = valorPaso2.split('.');
-            let enteros = partes[0] || '';
-            let decimales = partes[1] || '';
-
-            if (enteros.length > 1) {
-                enteros = enteros.slice(0, 1);
-            }
-            
-            if (decimales.length > 9) {
-                decimales = decimales.slice(0, 9);
-            }
-            
-            let valorReconstruido = enteros;
-            if (valorPaso2.includes('.') || decimales.length > 0) {
-                valorReconstruido += '.' + decimales;
-            }
-
-            valorFinal = valorReconstruido;
-        }
-
-        setFactores(prevFactores => ({
-            ...prevFactores,
-            [key] : valorFinal
-        }));
-    
-    }, [ingreso_por_montos]);
-
-    const manejarCheck = (e) => {
-        setIngresoPorMontos(e.target.checked); 
-    };
-
-
-    const [errorIngreso, setErrorIngreso] = useState(false);
-
-
-    const manejarCalcular = () => {
-        setErrorIngreso(null);
-        const factoresValidos = Object.values(factores).every(factor => String(factor) != '' && factor > 0);
-
-        if (factoresValidos){
-            const montosEnviar = factores_llaves.map(key => parseInt(factores[key]));
-            manejarMontos(montosEnviar);
-        } else {
-            setErrorIngreso("Por favor ingrese todos los montos (deben ser mayor a 0)")
-        }
+        const [mercado, setMercado] = useState(calificacion.mercado ? calificacion.mercado.id : '');
+        const [instrumento, setInstrumento] = useState(calificacion.instrumento);
+        const [valor_historico, setValorHistorico] = useState(calificacion.valor_historico)
+        const [fecha_pago, setFechaPago] = useState(calificacion.fecha_pago);
+        const [descripcion, setDescripcion] = useState(calificacion.descripcion);
+        const [secuencia_evento, setSecuenciaEvento] = useState(calificacion.secuencia_evento);
+        const [anio, setAnio] = useState(calificacion.anio);
         
-    };
+        const [ingreso_por_montos, setIngresoPorMontos] = useState(false);
+        
+        const inicializarFactores = (factores = []) => {
+            const factoresIniciales = {};
+            factores_llaves.forEach((key, index) => {
+                factoresIniciales[key] = factores[index] ?? '';
+            });
+            return factoresIniciales; 
+        };
+        
+        const [factores, setFactores] = useState(() => inicializarFactores(calificacion.factores));
+        
+        
+        // manejar montos y factores por separado correctamente
+        const manejarCambioFactor = useCallback((key, value) => {
+        
+            const valorEstandarizado = value.replace(/,/g, '.');
+        
+            let valorFinal;
+        
+            if (ingreso_por_montos) {
+        
+                // Montos solo aceptan dígitos
+                const regexMontos = /[^0-9]/g; 
+                valorFinal = valorEstandarizado.replace(regexMontos, '');
+                
+            } else {
+        
+                // Para factores permitimos 1 entero + hasta 8 decimales
+                const valorPaso1 = valorEstandarizado.replace(/[^0-9.]/g, ''); 
+                const valorPaso2 = valorPaso1.replace(/(\..*)\./g, '$1'); 
+        
+                const partes = valorPaso2.split('.');
+                let enteros = partes[0] || '';
+                let decimales = partes[1] || '';
+        
+                if (enteros.length > 1) {
+                    enteros = enteros.slice(0, 1); // SOLO 1 ENTERO
+                }
+                
+                if (decimales.length > 8) {
+                    decimales = decimales.slice(0, 8); // MAX 8 DECIMALES
+                }
+                
+                let valorReconstruido = enteros;
+                if (decimales.length > 0) {
+                    valorReconstruido += '.' + decimales;
+                }
+        
+                valorFinal = valorReconstruido;
+            }
+        
+            setFactores(prevFactores => ({
+                ...prevFactores,
+                [key] : valorFinal
+            }));
+        
+        }, [ingreso_por_montos]);
+        
+        
+        const manejarCheck = (e) => {
+            setIngresoPorMontos(e.target.checked); 
+        };
+        
+        
+        const [errorIngreso, setErrorIngreso] = useState(false);
 
-    useEffect(() => {
-        if (factoresCalculados && Object.keys(factoresCalculados).length > 0){
-            setFactores(factoresCalculados);
-            setIngresoPorMontos(false);
-        }
-    }, [factoresCalculados])
-
-    const manejarInt = (e) => {
-        if (e.key === '.' || e.key === ','){
+        
+        
+        const manejarCalcular = () => {
+            setErrorIngreso(null);
+        
+            // validación simple para montos (>=0)
+            const factoresValidos = Object.values(factores).every(factor =>
+                String(factor) !== '' && Number(factor) >= 0
+            );
+        
+            if (factoresValidos) {
+                const montosEnviar = factores_llaves.map(key => parseInt(factores[key]));
+                manejarMontos(montosEnviar);
+            } else {
+                setErrorIngreso("Por favor ingrese todos los montos (deben ser mayor o igual a 0)");
+            }
+        };
+        
+        useEffect(() => {
+            if (factoresCalculados && Object.keys(factoresCalculados).length > 0) {
+                setFactores(factoresCalculados);
+                setIngresoPorMontos(false);
+            }
+        }, [factoresCalculados]);
+        
+        
+        const manejarInt = (e) => {
+            if (e.key === '.' || e.key === ',') {
+                e.preventDefault();
+            }
+        };
+        
+        
+        const manejarSubmit = (e) => {
             e.preventDefault();
-        }
-    };
-
-    const manejarSubmit = (e) => {
-        e.preventDefault();
-        setErrorIngreso('');
-
-        const camposFormIngreso = [mercado, instrumento, valor_historico, fecha_pago, secuencia_evento, anio];
-        const camposValidos = camposFormIngreso.every(campo => String(campo) != '');
-        console.log("Campos validos: ",camposValidos);
-        const fecha_valida = fecha_pago < calificacion.fechaActualizacion;
-        console.log("Fecha valida: ",fecha_valida);
-        const factoresValidos = Object.values(factores).every(factor => {
-            const factorString = String(factor);
-            
-            if (factorString.trim() === '') {
-                return false; // Debe tener un valor
+            setErrorIngreso('');
+        
+            const camposFormIngreso = [mercado, instrumento, valor_historico, fecha_pago, secuencia_evento, anio];
+            const camposValidos = camposFormIngreso.every(campo => String(campo) != '');
+            const fecha_valida = fecha_pago <= calificacion.fechaActualizacion;
+        
+        
+            // validación depende del modo
+            const factoresValidos = Object.values(factores).every(factor => {
+                const factorString = String(factor).trim();
+                
+                if (factorString === '') return false;
+        
+                const valor = parseFloat(factorString.replace(/,/g, '.'));
+                if (isNaN(valor)) return false;
+        
+                // SI ES MONTO
+                if (ingreso_por_montos) {
+                    return valor >= 0; // aceptar 0
+                }
+        
+                // SI ES FACTOR
+                if (valor < 0 || valor > 1) return false;
+        
+                const decimales = (factorString.split('.')[1] || '');
+                if (decimales.length > 8) return false;
+        
+                return true;
+            });
+        
+        
+            if (!camposValidos || !factoresValidos || !fecha_valida) {
+                setErrorIngreso(
+                    'Por favor rellene todos los campos antes de ingresar, los factores deben tener como máximo 1 entero y 8 decimales, los factores deben tener un valor de entre 0 y 1, la fecha de pago no debe ser mayor a la fecha de actualización'
+                );
+                return;
             }
-
-            const valorEstandarizado = factorString.replace(/,/g, '.');
-            const valorNumerico = parseFloat(valorEstandarizado);
-
-            if (isNaN(valorNumerico) || valorNumerico <= 0 || valorNumerico > 1) {
-                return false;
-            }
-
-            const partes = valorEstandarizado.split('.');
-            const decimales = partes[1] || '';
-
-            if (decimales.length > 8) {
-                return false;
-            }
-            
-            return true;
-        });
-        console.log("Factores validos: ",factoresValidos);
-
-        if (!camposValidos || !factoresValidos || !fecha_valida){
-            setErrorIngreso('Por favor rellene todos los campos antes de ingresar, los factores deben tener como máximo 1 entero y 8 decimales, los factores deben tener un valor de entre 0 y 1, la fecha de pago no debe ser mayor a la fecha de actualización');
-            return;
-        }
-
-        const factoresEnviar = factores_llaves.map(key => parseFloat(factores[key]));
-        const datos = {
+        
+            const factoresEnviar = factores_llaves.map(key => parseFloat(factores[key]));
+        
+            const datos = {
                 id: calificacion.id || undefined,
                 ejercicio: parseInt(calificacion.ejercicio, 10),
                 instrumento: calificacion.instrumento,
@@ -202,123 +213,187 @@ function FormularioFactores ({mercados ,manejarCerrar, manejarVolver, manejarEnv
                 descripcion: calificacion.descripcion,
                 factores: factoresEnviar,
             }
-
-        console.log(datos);
-        manejarEnvio(datos);
         
-    };
-
-        const FactoresInput = (key, label) => (
-            <div className="d-flex align-items-center justify-content-between" key={key}>
-                <label htmlFor={key} className="form-label me-2">{label}</label>
-                <input type="number" name={key} id={key} className="form-control border-black" value={factores[key]} onChange={e => manejarCambioFactor(key, e.target.value)}/>
-            </div>
+            manejarEnvio(datos);
+        };
+        
+        
+        // usa input type="text" para no romper los decimales y ceros
+        const FactoresInput = (key) => (
+            <input 
+                type="text" 
+                name={key} 
+                id={key} 
+                className="form-control border-black" 
+                value={factores[key]} 
+                onChange={e => manejarCambioFactor(key, e.target.value)}
+            />     
         );
+        
 
         //Columnas factores
-        const columna1Factores = factores_llaves.slice(0, 11);
-        const columna2Factores = factores_llaves.slice(11, 21);
-        const columna3Factores = factores_llaves.slice(21);
+        const columna1Factores = factores_llaves.slice(0, 10);
+        const columna2Factores = factores_llaves.slice(10, 20);
+        const columna3Factores = factores_llaves.slice(20,30);
+
 
 
     return (
         <div>
-            <form className="form" onSubmit={manejarSubmit}>
-                {/*Formulario rellenado con los valores de FormularioIngreso*/}
-                <div className="d-flex flex-wrap justify-content-between">
+           <form className="form" onSubmit={manejarSubmit}>
 
-                    <div className="d-flex flex-column gap-2 col-4 pe-3">
-                        {/*Mercado*/}
-                        <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="mercado" className="form-label text-nowrap me-2">Mercado</label>
-                            <select name="mercados" id="mercados" className="form-select border-black w-50" value={mercado} onChange={(e) => setMercado(e.target.value)}>
-                                <option>Seleccione mercado</option>
-                                {mercados.map( (mercado, index) => (
-                                    <option key={index} value={mercado.id}>{mercado.nombre}</option>
-                                ))}
-                            </select>
+                {/* --- FORM PRINCIPAL (igual al formulario de ingreso) --- */}
+                <div className="row">
+
+                    <div className="col-lg-4">
+
+                        {/* Mercado */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Mercado</label>
+                            <div className="col-sm-8">
+                                <select className="form-control form-control-sm" value={mercado} onChange={(e) => setMercado(e.target.value)}>
+                                    <option>Seleccione mercado</option>
+                                    {mercados.map((m, index) => (
+                                        <option key={index} value={m.id}>{m.nombre}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
-                        {/*Fecha_pago*/}
-                        <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="fecha_pago" className="form-label text-nowrap me-2">Fecha Pago</label>
-                            <input type="date" name="fecha_pago" id="fecha_pago" className="form-control w-50 border-black" value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)}/>
+                        {/* Fecha Pago */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Fecha Pago</label>
+                            <div className="col-sm-8">
+                                <input type="date" className="form-control form-control-sm"
+                                    value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)} />
+                            </div>
                         </div>
-                        {/*Año*/}
-                        <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="anio" className="form-label text-nowrap me-2">Año</label>
-                            <input type="number" step={1} onKeyDown={manejarInt} name="anio" id="anio" className="form-control w-50 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/>
-                        </div> 
+
+                        {/* Año */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Año</label>
+                            <div className="col-sm-8">
+                                <input type="number" className="form-control form-control-sm"
+                                    onKeyDown={manejarInt}
+                                    value={anio} onChange={(e) => setAnio(e.target.value)} />
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div className="d-flex flex-column gap-2 col-4 pe-3">
-                        {/*Instrumento*/}
-                        <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="instrumento" className="form-label text-nowrap me-2">Instrumento</label>
-                            <input type="text" name="instrumento" id="instrumento" className="form-control w-50 border-black" value={instrumento} onChange={(e) => setInstrumento(e.target.value)}/>
+                    <div className="col-lg-4">
+
+                        {/* Instrumento */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Instrumento</label>
+                            <div className="col-sm-8">
+                                <input type="text" className="form-control form-control-sm"
+                                    value={instrumento} onChange={(e) => setInstrumento(e.target.value)} />
+                            </div>
                         </div>
-                        {/*Descripción*/}
-                        <div className="d-flex align-items-center justify-content-between align-self-start w-100">
-                            <label htmlFor="descripcion" className="form-label text-nowrap me-2">Descripción</label>
-                            <textarea name="descripcion" id="descripcion" className="form-control w-50 border-black" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
+
+                        {/* Descripción */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Descripción</label>
+                            <div className="col-sm-8">
+                                <textarea className="form-control form-control-sm"
+                                        value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                            </div>
                         </div>
-                        {/*Ingreso por montos*/}
-                        <div className="d-flex align-items-center justify-content-start w-100">
-                            <label htmlFor="ingreso_por_montos" className="form-check-label text-nowrap me-2">Ingreso por Montos</label>
-                            <input type="checkbox" name="ingreso_por_montos" id="ingreso_por_montos" className="form-check-input border-black" checked={ingreso_por_montos} onChange={(e) => manejarCheck(e)}/>
+
+                        {/* Checkbox */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Por Montos</label>
+                            <div className="col-sm-8 d-flex">
+                                <input type="checkbox" className="form-check-input"
+                                    checked={ingreso_por_montos} onChange={manejarCheck} />
+                            </div>
                         </div>
+
                     </div>
-                    
-                    <div className="d-flex flex-column gap-2 col-4">
-                        {/*Valor histórico*/}
-                        <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="valor_historico" className="form-label text-nowrap me-2">Valor Histórico</label>
-                            <input type="number" name="valor_historico" id="valor_historico" className="form-control w-50 border-black" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)}/>
+
+                    <div className="col-lg-4">
+
+                        {/* Valor Histórico */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Valor Histórico</label>
+                            <div className="col-sm-8">
+                                <input type="number" className="form-control form-control-sm"
+                                    value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)} />
+                            </div>
                         </div>
-                        {/*Secuencia evento*/}
-                        <div className="d-flex align-items-center justify-content-between">
-                            <label htmlFor="secuencia_evento" className="form-label text-nowrap me-2">Secuencia Evento</label>
-                            <input type="number" step={1} onKeyDown={manejarInt} name="secuencia_evento" id="secuencia_evento" className="form-control w-50 border-black" value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
+
+                        {/* Secuencia Evento */}
+                        <div className="row mb-3 align-items-center">
+                            <label className="col-sm-4 col-form-label">Secuencia</label>
+                            <div className="col-sm-8">
+                                <input type="number" className="form-control form-control-sm"
+                                    onKeyDown={manejarInt}
+                                    value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)} />
+                            </div>
                         </div>
+
                     </div>
+
+                </div>
+
+                <hr />
+
+                {/* ---------- FACTORES (3 COLUMNAS ESTILO FORM INGRESO) ---------- */}
+                <div className="row">
+
+                    <div className="col-lg-4">
+                        {columna1Factores.map(key => (
+                            <div key={key} className="mb-3">
+                                <label className="form-label fw-semibold text-truncate">
+                                    {factores_label[key]}
+                                </label>
+                                {FactoresInput(key, factores_label[key], true)}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="col-lg-4">
+                        {columna2Factores.map(key => (
+                            <div key={key} className="mb-3">
+                                <label className="form-label fw-semibold text-truncate">
+                                    {factores_label[key]}
+                                </label>
+                                {FactoresInput(key, factores_label[key], true)}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="col-lg-4">
+                        {columna3Factores.map(key => (
+                            <div key={key} className="mb-3">
+                                <label className="form-label fw-semibold text-truncate">
+                                    {factores_label[key]}
+                                </label>
+                                {FactoresInput(key, factores_label[key], true)}
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
                 <hr />
-                {/*Formulario de Factores*/}
-                <div>
-                    <div className="d-flex justify-content-between">
 
-                        <div className="d-flex flex-column gap-2 col-4 pe-3">
-                            {columna1Factores.map(key => FactoresInput(key, factores_label[key]))}
-                        </div>
+                {/* BOTONES */}
+                <div className="d-flex justify-content-end gap-2 mt-3">
+                    {errorIngreso && <p className="text-danger me-auto">{errorIngreso}</p>}
 
-                        <div className="d-flex flex-column gap-2 col-4 pe-3">
-                            {columna2Factores.map(key => FactoresInput(key, factores_label[key]))}
-                        </div>
+                    <button className="btn btn-secondary" type="button" onClick={manejarVolver}>Volver</button>
+                    <button className="btn btn-danger" type="button" onClick={() => { manejarCerrar(); manejarVolver(); }}>Cancelar</button>
 
-                        <div className="d-flex flex-column gap-2 col-4 pe-3">
-                            {columna3Factores.map(key => FactoresInput(key, factores_label[key]))}
-                        </div>
-
-                    </div>
-                </div>
-                <hr />
-                <div className="d-flex flex-row gap-2 justify-content-end mt-3">
-                    {errorIngreso 
-                    ? 
-                        <p className="text-danger">{errorIngreso}</p>    
-                    :
-                        <span></span>
-                    }
-                    <button className="btn btn-secondary" onClick={manejarVolver}>Volver</button>
-                    <button className="btn btn-danger" onClick={() => {manejarCerrar(); manejarVolver();}}>Cancelar</button>
-                    {ingreso_por_montos
-                        ?
+                    {ingreso_por_montos ? (
                         <button className="btn btn-secondary" type="button" onClick={manejarCalcular}>Calcular</button>
-                       :
+                    ) : (
                         <button className="btn btn-success" type="submit">Enviar</button>
-                    }
+                    )}
                 </div>
+
             </form>
+
         </div>
     )
 };

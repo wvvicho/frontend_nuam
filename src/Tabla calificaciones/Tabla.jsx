@@ -179,9 +179,17 @@ function Tabla({ mercadoBusqueda, origenBusqueda, periodoBusqueda, pendienteBusq
                     <tbody>
                         {CalificacionesFiltrada.map((item, index) => (
                             <tr key={index}>
-                                <td className="d-flex gap-3">
-                                    <button className="btn btn-warning w-50" onClick={() => actualizarCalificacion(item)}>Actualizar</button> 
-                                    <button className="btn btn-danger w-50" onClick={() => eliminarCalificacion(item.id)}>Eliminar</button>
+                                <td className="d-flex gap-2">
+                                    <button 
+                                        className="btn-soft-warning flex-fill" 
+                                        onClick={() => actualizarCalificacion(item)}>
+                                        <i className="bi bi-pencil-square"></i>                              
+                                    </button> 
+                                    <button 
+                                        className="btn-soft-danger flex-fill"
+                                        onClick={() => eliminarCalificacion(item.id)}>
+                                        <i className="bi bi-trash"></i>
+                                        </button>
                                 </td>
                                 <td>{item.ejercicio}</td>
                                 <td>{item.instrumento}</td>

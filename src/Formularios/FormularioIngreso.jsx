@@ -4,6 +4,7 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
     
 
 
+
     const [mercado, setMercado] = useState('');
     const [origen, setOrigen] = useState('');
     const [periodo, setPeriodo] = useState('');
@@ -103,80 +104,145 @@ function FormularioIngreso ({mercados, origenes, manejarCerrar, calificacionActu
                 console.log(datos);
                 manejarSiguiente(datos);
         }else{
-            setErrorIngreso("Por favor rellene todos los campos necesarios, el ejercicio debe ser mayor a 1950, el instrumento debe tener exactamente 3 caracteres, la fecha de actualización no debe ser menor a la fecha de pago, el año debe ser mayor a 1950")
+            setErrorIngreso("Por favor corrija los siguientes campos:\n\n" +
+            "• Ejercicio debe ser mayor a 1950\n" +
+            "• Instrumento debe tener 3 caracteres\n" +
+            "• La fecha de actualización no puede ser menor a la fecha de pago\n" +
+            "• Debe completar todos los campos requeridos") 
         }
     } 
     
     return (
         <div>
             <form className="form d-flex flex-wrap gap-5">
-                <div className="col-lg-5 d-flex flex-column justify-content-start">
-                    <label htmlFor="mercados" className="form-label">Mercado</label>
-                    <select name="mercados" id="mercados" className="form-select mb-3 border-black" value={mercado} onChange={(e) => setMercado(e.target.value)}>
-                        <option></option>
-                        {mercados.map( (mercado, index) => (
-                            <option key={index} value={mercado.id}>{mercado.nombre}</option>
-                        ))}
-                    </select>
 
-                    <label htmlFor="origenes" className="form-label">Origen</label>
-                    <select name="origenes" id="origenes" className="form-select mb-3 border-black" value={origen} onChange={(e) => setOrigen(e.target.value)}>
-                        <option></option>
-                        {origenes.map( (origen, index) => (
-                            <option key={index} value={origen.id}>{origen.nombre}</option>
-                        ))}
-                    </select>
+            <div className="col-lg-5">
 
-                    <label htmlFor="periodo" className="form-label">Periodo</label>
-                    <input type="number" step={1} onKeyDown={manejarInt} name="periodo" id="periodo" className="form-control mb-3 border-black" value={periodo} onChange={(e) => setPeriodo(e.target.value)}/>
-
-                    <label htmlFor="ejercicio" className="form-label">Ejercicio</label>
-                    <input type="number" step={1} onKeyDown={manejarInt} name="ejercicio" id="ejercicio" className="form-control mb-3 border-black" value={ejercicio} onChange={(e) => setEjercicio(e.target.value)}/>
-
-                    <label htmlFor="instrumento" className="form-label">Instrumento</label>
-                    <input type="text" name="instrumento" id="instrumento" className="form-control mb-3 border-black" value={instrumento} onChange={(e) => setInstrumento(e.target.value)}/>
-
-                    <label htmlFor="descripcion" className="form-label">Descripción</label>
-                    <textarea name="descripcion" id="descripcion" className="form-control mb-3 border-black" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
-
-                    <label htmlFor="fecha_pago" className="form-label">Fecha Pago</label>
-                    <input type="date" name="fecha_pago" id="fecha_pago" className="form-control mb-3 border-black" value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)}/>
-
-                    <label htmlFor="secuencia" className="form-label">Secuencia Evento</label>
-                    <input type="number" step={1} onKeyDown={manejarInt} name="secuencia" id="secuencia" className="form-control mb-3 border-black"  value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)}/>
-
-                    <label htmlFor="dividendo" className="form-label">Dividendo</label>
-                    <input type="number" step={1} onKeyDown={manejarInt} name="dividendo" id="dividendo" className="form-control mb-3 border-black" value={dividendo} onChange={(e) => setDividendo(e.target.value)}/>
-
-                    <label htmlFor="valor">Valor histórico</label>
-                    <input type="number" name="valor" id="valor" className="form-control mb-3 border-black" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)}/>
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Mercado</label>
+                    <div className="col-sm-8">
+                        <select className="form-control form-control-sm" value={mercado} onChange={(e) => setMercado(e.target.value)}>
+                            <option></option>
+                            {mercados.map((m, index) => (
+                                <option key={index} value={m.id}>{m.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
-                <div className="col-lg-6 d-flex flex-column align-items-start">
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Origen</label>
+                    <div className="col-sm-8">
+                        <select className="form-control form-control-sm" value={origen} onChange={(e) => setOrigen(e.target.value)}>
+                            <option></option>
+                            {origenes.map((o, index) => (
+                                <option key={index} value={o.id}>{o.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
 
-                    <label htmlFor="factor_actualizacion" className="form-label">Factor actualización</label>
-                    <input type="number" step={1} onKeyDown={manejarInt} name="factor_actualizacion" id="factor_actualizacion" className="form-control mb-3 border-black" value={factor_actualizacion} onChange={(e) => setFactorActualizacion(e.target.value)}/>   
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Periodo</label>
+                    <div className="col-sm-8">
+                        <input type="number" step="1" className="form-control form-control-sm" onKeyDown={manejarInt} value={periodo} onChange={(e) => setPeriodo(e.target.value)} />
+                    </div>
+                </div>
 
-                    <label htmlFor="fecha_actualizacion" className="form-label">Fecha de actualización</label>
-                    <input type="date" name="fecha_actualizacion" id="fecha_actualizacion" className="form-control mb-3 border-black" value={fechaActualizacion} onChange={(e) => setFechaActualizacion(e.target.value)}/>
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Ejercicio</label>
+                    <div className="col-8">
+                        <input type="number" className="form-control form-control-sm" onKeyDown={manejarInt} value={ejercicio} onChange={(e) => setEjercicio(e.target.value)} />
+                    </div>
+                </div>
 
-                    <label htmlFor="anio" className="form-label">Año</label>
-                    <input type="number" step={1} onKeyDown={manejarInt} name="anio" id="anio" className="form-control mb-3 border-black" value={anio} onChange={(e) => setAnio(e.target.value)}/> 
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Instrumento</label>
+                    <div className="col-8">
+                        <input type="text" className="form-control form-control-sm" value={instrumento} onChange={(e) => setInstrumento(e.target.value)} />
+                    </div>
+                </div>
 
-                    <label htmlFor="isfut" className="form-label">ISFUT</label>
-                    <input type="checkbox" name="isfut" id="isfut" className="form-check-input border-black" value={isfut} onChange={(e) => setISFUT(e.target.checked)} checked={isfut}/> 
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Descripción</label>
+                    <div className="col-8">
+                        <textarea className="form-control form-control-sm" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                    </div>
+                </div>
 
-                    <div className="d-flex flex-row gap-2 justify-content-end w-100 flex-wrap mt-3">
-                        <button className="btn btn-danger" type="button" onClick={manejarCerrar}>Cancelar</button>
-                        <button className="btn btn-primary" type="button" onClick={siguiente}>Siguiente</button>
-                        {errorIngreso ?
-                        <h1 className="text-danger">{errorIngreso}</h1>
-                        :
-                        <span></span>
-                        }
-                    </div>  
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Fecha Pago</label>
+                    <div className="col-8">
+                        <input type="date" className="form-control form-control-sm" value={fecha_pago} onChange={(e) => setFechaPago(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Secuencia</label>
+                    <div className="col-8">
+                        <input type="number" className="form-control form-control-sm" onKeyDown={manejarInt} value={secuencia_evento} onChange={(e) => setSecuenciaEvento(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Dividendo</label>
+                    <div className="col-8">
+                        <input type="number" className="form-control form-control-sm" onKeyDown={manejarInt} value={dividendo} onChange={(e) => setDividendo(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Valor histórico</label>
+                    <div className="col-8">
+                        <input type="number" className="form-control form-control-sm" value={valor_historico} onChange={(e) => setValorHistorico(e.target.value)} />
+                    </div>
+                </div>
+            </div>
+
+            <div className="col-lg-6">
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Factor actualización</label>
+                    <div className="col-8">
+                        <input type="number" className="form-control form-control-sm" onKeyDown={manejarInt} value={factor_actualizacion} onChange={(e) => setFactorActualizacion(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Fecha actualización</label>
+                    <div className="col-8">
+                        <input type="date" className="form-control form-control-sm" value={fechaActualizacion} onChange={(e) => setFechaActualizacion(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">Año</label>
+                    <div className="col-8">
+                        <input type="number" className="form-control form-control-sm" onKeyDown={manejarInt} value={anio} onChange={(e) => setAnio(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row mb-3 align-items-center">
+                    <label className="col-sm-4 col-form-label">ISFUT</label>
+                    <div className="col-8">
+                        <input type="checkbox" className="form-check-input border-black" checked={isfut} onChange={(e) => setISFUT(e.target.checked)} />
+                    </div>
+                </div>
+
+                <div className="d-flex justify-content-end gap-2 mt-4 w-100">
+                    <button className="btn btn-danger" type="button" onClick={manejarCerrar}>Cancelar</button>
+                    <button className="btn btn-primary" type="button" onClick={siguiente}>Siguiente</button>
+                </div>
+
+                {errorIngreso && (
+                    <p className="text-danger mt-3" style={{ whiteSpace: "pre-line", fontSize: "19px" }}>
+                        {errorIngreso}
+                    </p>
+                )}
+
                 </div>
             </form>
+
         </div>
     )
 };
