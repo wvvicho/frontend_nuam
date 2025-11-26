@@ -75,7 +75,7 @@ Abre de forma automática [http://localhost:3000](http://localhost:3000) para ve
 La página se recarga automáticamente cada vez que realices cambios en el código.\
 También verás errores de linting en la consola si los hay.
 
-## `npm run backend`
+### `npm run backend`
 Inicia un servidor API REST simulado para el desarrollo local. Su puerto por defecto es el 8000.
 Algunas de sus funciones son:
 -  Puntos finales completos de la API REST (GET, POST, PUT, DELETE).
