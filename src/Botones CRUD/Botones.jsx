@@ -35,6 +35,7 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
 
     //Acciones Modal de Carga por Factor
     const [abrirCargaFactor, setAbrirCargaFactor] = useState(false);
+
     
     const manejarAbrirCargaFactor = () => {
         setAbrirCargaFactor(true);
@@ -187,7 +188,6 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
                         }
                     </Box>
                 </Modal>
-            <button className="btn bg-white border border-primary text-primary text-nowrap">CARGA POR MONTO</button>
             <button className="btn bg-white border border-primary text-primary text-nowrap" onClick={manejarAbrirCargaFactor}>CARGA POR FACTOR</button>
                 <Modal
                 open={abrirCargaFactor}
