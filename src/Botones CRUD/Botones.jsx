@@ -4,7 +4,7 @@ import FormularioIngreso from "../Formularios/FormularioIngreso";
 import FormularioFactores from "../Formularios/FormularioFactores";
 import TablaCargaArchivo from "../Tabla calificaciones/TablaCargaArchivo";
 
-function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalificaciones, calificacionActualizar, manejarActualizar}) {
+function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalificaciones, calificacionActualizar, manejarActualizar, refrescar }) {
     
     const factores_llaves = [
     "factor_08", "factor_09", "factor_10", "factor_11", "factor_12", "factor_13",
@@ -199,7 +199,7 @@ function Botones ({mercados, origenes, periodos, urlCalificaciones, cambioCalifi
                     <Box sx={estiloModal}>
                         <h2 id="modal-titulo-f" className="text-primary">Carga Archivo Por Factor</h2>
                         <hr />
-                        <TablaCargaArchivo manejarCerrar={manejarCerrarCargaFactor} urlCalificaciones={urlCalificaciones}/>
+                        <TablaCargaArchivo manejarCerrar={manejarCerrarCargaFactor} urlCalificaciones={urlCalificaciones} refrescar={refrescar}/>
                     </Box>        
                 </Modal>
         </div>

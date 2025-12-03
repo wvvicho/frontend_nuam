@@ -67,7 +67,7 @@ const limpiarConvertirDatos = (csvData) => {
 
 
 
-function TablaCargaArchivo ({ manejarCerrar, urlCalificaciones }) {
+function TablaCargaArchivo ({ manejarCerrar, urlCalificaciones, refrescar }) {
     const [calificaciones, setCalificaciones] = useState([]);
     const [error, setError] = useState(null);
     const [datosPrevios, setDatosPrevios] = useState([]);
@@ -128,6 +128,7 @@ function TablaCargaArchivo ({ manejarCerrar, urlCalificaciones }) {
 
             if (respuesta.ok) {
                 console.log("Ingreso de datos por carga exitoso");
+                refrescar();
                 setError(null);
             } else {
                 console.log(calificaciones);

@@ -130,7 +130,7 @@ function App() {
       <hr/>
       <Busqueda Cambiando={Cambiando} mercados={mercados} origenes={origenes} periodos={periodos}/>
       <Tabla mercadoBusqueda={filtros.mercado} origenBusqueda={filtros.origen} periodoBusqueda={filtros.periodo} pendienteBusqueda={filtros.pendiente} calificaciones={calificaciones} urlCalificaciones={URL_CALIFICACIONES} cambioCalificaciones={conseguirCalificaciones} manejarActualizar={manejarActualizar} manejarCambioPagina={manejarCambioPagina} paginaActual={paginaActual} totalPaginas={totalPaginas}/>
-      <Botones mercados={mercados} origenes={origenes} periodos={periodos} urlCalificaciones={URL_CALIFICACIONES} cambioCalificaciones={conseguirCalificaciones} calificacionActualizar={calificacionActualizar} manejarActualizar={manejarActualizar}/>
+      <Botones mercados={mercados} origenes={origenes} periodos={periodos} urlCalificaciones={URL_CALIFICACIONES} cambioCalificaciones={conseguirCalificaciones} calificacionActualizar={calificacionActualizar} manejarActualizar={manejarActualizar} refrescar={conseguirCalificaciones}/>
     </div>
   );
 }
